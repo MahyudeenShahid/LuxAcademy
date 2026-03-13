@@ -1,3 +1,8 @@
+if (process.env.USE_MOCK_DB === 'true') {
+  module.exports = require('../data/mockStore').MockEnrollment;
+  return;
+}
+
 const mongoose = require('mongoose');
 
 const enrollmentSchema = new mongoose.Schema(

@@ -1,3 +1,9 @@
+// When USE_MOCK_DB is set, export the in-memory mock model (no Mongoose needed)
+if (process.env.USE_MOCK_DB === 'true') {
+  module.exports = require('../data/mockStore').MockUser;
+  return;
+}
+
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 

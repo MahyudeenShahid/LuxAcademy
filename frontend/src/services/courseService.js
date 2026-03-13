@@ -88,3 +88,26 @@ export const createLessonApi = async (courseId, lessonData) => {
     return { success: false, message: err.response?.data?.message || 'Failed to create lesson' };
   }
 };
+
+export const getLessonsApi = async (courseId) => {
+  try {
+    const { data } = await api.get(`/courses/${courseId}/lessons`);
+    return { success: true, lessons: data.lessons };
+  } catch (err) {
+    if (isOfflineError(err)) {
+      return { success: true, lessons: MOCK_LESSONS[courseId] || [] };
+    }
+    return { success: false, message: err.response?.data?.message || 'Failed to fetch lessons', lessons: [] };
+  }
+};
+
+export const deleteLessonApi = async (courseId, lessonId) => {
+  try {
+    await api.delete(`/courses/${courseId}/lessons/${lessonId}`);
+    return { success: true };
+  } catch (err) {
+    if (isOfflineError(err)) return { success: true };
+    return { success: false, message: err.response?.data?.message || 'Failed to delete lesson' };
+  }
+};
+

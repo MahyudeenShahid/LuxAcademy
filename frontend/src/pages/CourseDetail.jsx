@@ -1,10 +1,39 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Star, Clock, Award, PlayCircle, FileText, CheckCircle, ChevronRight, ChevronDown, User, Share2, Heart, MonitorPlay } from "lucide-react";
-import { motion } from "framer-motion";
+import { Star, Clock, Award, PlayCircle, FileText, CheckCircle, ChevronRight, ChevronDown, ChevronUp, User, Share2, Heart, MonitorPlay, Lock } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { getCourseByIdApi } from "../services/courseService";
 import { enrollInCourseApi, checkEnrollmentApi } from "../services/enrollmentService";
+
+function getYouTubeId(url) {
+  if (!url) return null;
+  const match = url.match(/(?:youtube\.com\/(?:watch\?v=|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/);
+  return match ? match[1] : null;
+}
+
+function VideoPlayer({ url }) {
+  if (!url) return null;
+  const ytId = getYouTubeId(url);
+  if (ytId) {
+    return (
+      <div className="w-full aspect-video rounded-xl overflow-hidden bg-black mt-4">
+        <iframe
+          src={`https://www.youtube.com/embed/${ytId}?autoplay=1`}
+          title="Lesson video"
+          className="w-full h-full"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        />
+      </div>
+    );
+  }
+  return (
+    <div className="w-full aspect-video rounded-xl overflow-hidden bg-black mt-4">
+      <video src={url} controls className="w-full h-full" />
+    </div>
+  );
+}
 
 export default function CourseDetail() {
   const { id } = useParams();
@@ -18,6 +47,7 @@ export default function CourseDetail() {
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [enrolling, setEnrolling] = useState(false);
   const [enrollMsg, setEnrollMsg] = useState('');
+  const [selectedLesson, setSelectedLesson] = useState(null);
 
   useEffect(() => {
     getCourseByIdApi(id).then((result) => {
@@ -177,21 +207,73 @@ export default function CourseDetail() {
                 </div>
               </div>
               <div className="space-y-4">
-                {lessons.length > 0 ? lessons.map((lesson, i) => (
-                  <div key={lesson._id} className="border border-[#2A1B4E] bg-[#0A051A]/50 rounded-2xl p-5 hover:border-violet-500/50 hover:bg-[#1A103C]/50 transition-all cursor-pointer group">
-                    <div className="flex justify-between items-center">
-                      <div className="flex items-center gap-3">
-                        <span className="w-7 h-7 rounded-full bg-violet-600/20 border border-violet-500/30 flex items-center justify-center text-xs font-bold text-violet-400">{i + 1}</span>
-                        <h3 className="font-bold text-white group-hover:text-violet-300 transition-colors text-sm">{lesson.title}</h3>
-                        {lesson.isFree && <span className="text-[9px] font-bold uppercase bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded">Free</span>}
-                      </div>
-                      <div className="flex items-center gap-3">
-                        {lesson.duration && <span className="text-xs text-slate-400 flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration}</span>}
-                        <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-violet-400 transition-colors" />
-                      </div>
+                {lessons.length > 0 ? lessons.map((lesson, i) => {
+                  const isOpen = selectedLesson === lesson._id;
+                  const canWatch = lesson.isFree || isEnrolled;
+                  return (
+                    <div
+                      key={lesson._id}
+                      className={`border rounded-2xl overflow-hidden transition-all ${isOpen ? 'border-violet-500/60 bg-[#1A103C]/70' : 'border-[#2A1B4E] bg-[#0A051A]/50 hover:border-violet-500/50 hover:bg-[#1A103C]/50'}`}
+                    >
+                      <button
+                        onClick={() => setSelectedLesson(isOpen ? null : lesson._id)}
+                        className="w-full flex justify-between items-center p-5 group text-left"
+                      >
+                        <div className="flex items-center gap-3">
+                          <span className="w-7 h-7 rounded-full bg-violet-600/20 border border-violet-500/30 flex items-center justify-center text-xs font-bold text-violet-400 shrink-0">{i + 1}</span>
+                          <h3 className="font-bold text-white group-hover:text-violet-300 transition-colors text-sm">{lesson.title}</h3>
+                          {lesson.isFree && <span className="text-[9px] font-bold uppercase bg-emerald-500/10 text-emerald-400 px-2 py-0.5 rounded shrink-0">Free</span>}
+                        </div>
+                        <div className="flex items-center gap-3 shrink-0 ml-3">
+                          {lesson.duration && <span className="text-xs text-slate-400 flex items-center gap-1"><Clock className="w-3 h-3" />{lesson.duration}</span>}
+                          {canWatch
+                            ? <PlayCircle className="h-4 w-4 text-violet-400" />
+                            : <Lock className="h-4 w-4 text-slate-500" />
+                          }
+                          {isOpen ? <ChevronUp className="h-4 w-4 text-violet-400" /> : <ChevronDown className="h-4 w-4 text-slate-500 group-hover:text-violet-400 transition-colors" />}
+                        </div>
+                      </button>
+
+                      <AnimatePresence>
+                        {isOpen && (
+                          <motion.div
+                            key="content"
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: 'auto', opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden"
+                          >
+                            <div className="px-5 pb-5">
+                              {canWatch ? (
+                                lesson.videoUrl ? (
+                                  <VideoPlayer url={lesson.videoUrl} />
+                                ) : (
+                                  <div className="mt-4 flex items-center gap-3 p-4 rounded-xl bg-[#0A051A]/70 border border-[#2A1B4E] text-slate-400 text-sm">
+                                    <FileText className="w-5 h-5 text-violet-400 shrink-0" />
+                                    <span>No video for this lesson yet. Check back later.</span>
+                                  </div>
+                                )
+                              ) : (
+                                <div className="mt-4 flex flex-col items-center gap-3 p-6 rounded-xl bg-[#0A051A]/70 border border-[#2A1B4E] text-center">
+                                  <Lock className="w-8 h-8 text-slate-500" />
+                                  <p className="text-slate-400 text-sm font-medium">Enroll in this course to unlock this lesson.</p>
+                                  <button
+                                    onClick={handleEnroll}
+                                    disabled={enrolling}
+                                    className="mt-1 px-6 py-2 bg-violet-600 hover:bg-violet-500 disabled:opacity-60 text-white rounded-xl font-bold text-xs tracking-widest uppercase transition-all"
+                                  >
+                                    {enrolling ? 'Enrolling…' : user ? 'Enroll Now' : 'Login to Enroll'}
+                                  </button>
+                                </div>
+                              )}
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
                     </div>
-                  </div>
-                )) : (
+                  );
+                }) : (
                   // Fallback skeleton modules when no lessons from API
                   [
                     { title: "Module 1: Getting Started", duration: "2h 45m", lessons: 8 },

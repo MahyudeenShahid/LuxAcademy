@@ -12,7 +12,7 @@ import InstructorDashboard from "../components/dashboard/InstructorDashboard";
 import AdminDashboard from "../components/dashboard/AdminDashboard";
 
 export default function Dashboard() {
-  const { user, __devSwitchRole } = useAuth();
+  const { user } = useAuth();
   const role = user?.role || "student";
   const [activeTab, setActiveTab] = useState("overview");
 
@@ -42,11 +42,6 @@ export default function Dashboard() {
     ]
   };
 
-  const handleRoleChange = (newRole) => {
-    if (__devSwitchRole) __devSwitchRole(newRole);
-    setActiveTab("overview");
-  };
-
   return (
     <div className="bg-[#080410] pt-24 min-h-screen flex flex-col md:flex-row text-white font-sans selection:bg-violet-600/30 overflow-hidden relative">
       {/* Background Orbs */}
@@ -56,30 +51,20 @@ export default function Dashboard() {
       {/* Sidebar */}
       <aside className="w-full md:w-72 bg-[#0A051A]/80 backdrop-blur-2xl border-r border-[#2A1B4E] p-6 flex-col hidden md:flex relative z-10 shrink-0 overflow-y-auto max-h-[calc(100vh-6rem)]">
         
-        {/* Role Switcher (For Demo Purposes) */}
-        <div className="mb-6 bg-[#120B24] p-1.5 rounded-xl border border-[#2A1B4E] flex shadow-lg">
-          {["student", "instructor", "admin"].map((r) => (
-            <button
-              key={r}
-              onClick={() => handleRoleChange(r)}
-              className={`flex-1 text-[10px] font-bold uppercase tracking-wider py-2 rounded-lg transition-all ${
-                role === r 
-                  ? "bg-violet-600 text-white shadow-[0_0_10px_rgba(124,58,237,0.3)]" 
-                  : "text-slate-500 hover:text-white hover:bg-white/5"
-              }`}
-            >
-              {r}
-            </button>
-          ))}
-        </div>
-
+        {/* Profile Card */}
         <div className="bg-[#120B24] border border-[#2A1B4E] rounded-2xl p-4 mb-8 shrink-0">
           <div className="flex items-center space-x-3">
             <div className="h-12 w-12 rounded-full overflow-hidden border-2 border-violet-500/50 shadow-[0_0_15px_rgba(124,58,237,0.3)] shrink-0">
-              <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=150&q=80" alt="Avatar" className="w-full h-full object-cover" />
+              {user?.avatar ? (
+                <img src={user.avatar} alt={user.name} className="w-full h-full object-cover" />
+              ) : (
+                <div className="w-full h-full bg-violet-600/30 flex items-center justify-center text-violet-300 font-bold text-lg">
+                  {user?.name?.[0]?.toUpperCase() || '?'}
+                </div>
+              )}
             </div>
             <div>
-              <h3 className="font-bold text-white text-sm">Alex Carter</h3>
+              <h3 className="font-bold text-white text-sm">{user?.name || 'User'}</h3>
               <div className="inline-flex items-center space-x-1 mt-1">
                 {role === "admin" ? (
                   <Shield className="w-3 h-3 text-emerald-400" />
