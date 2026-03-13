@@ -54,7 +54,7 @@ export default function Navbar() {
                 Sign In
               </Link>
               <Link
-                to="/login"
+                to="/register"
                 className="bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold px-6 py-2.5 rounded-full transition-all duration-300 flex items-center space-x-1"
               >
                 <span>Get Started</span>
@@ -110,7 +110,7 @@ export default function Navbar() {
                 Sign In
               </Link>
               <Link
-                to="/login"
+                to="/register"
                 onClick={() => setIsOpen(false)}
                 className="bg-violet-600 text-white text-base font-semibold px-6 py-3 w-full text-center rounded-full"
               >

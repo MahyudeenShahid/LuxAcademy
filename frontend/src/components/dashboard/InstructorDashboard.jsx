@@ -109,6 +109,72 @@ export default function InstructorDashboard({ activeTab, setActiveTab }) {
           </div>
         </div>
       )}
+
+      {activeTab === "analytics" && (
+        <div className="bg-[#120B24] p-8 rounded-2xl border border-[#2A1B4E]">
+          <h2 className="text-xl font-bold text-white mb-6">Detailed Analytics</h2>
+          <div className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                <p className="text-sm font-medium text-slate-400">Total Play Time</p>
+                <h4 className="text-2xl font-bold text-white mt-1">45,200 hrs</h4>
+              </div>
+              <div className="p-4 bg-slate-900/50 rounded-xl border border-slate-800">
+                <p className="text-sm font-medium text-slate-400">Avg Completion Rate</p>
+                <h4 className="text-2xl font-bold text-emerald-400 mt-1">72%</h4>
+              </div>
+            </div>
+            {/* Same bar chart can be reused conceptually */}
+            <div className="h-64 w-full mt-6">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={revenueData}>
+                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#2A1B4E" fillOpacity={0.5} />
+                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#94a3b8'}} />
+                  <YAxis axisLine={false} tickLine={false} tick={{fill: '#94a3b8'}} />
+                  <Tooltip contentStyle={{ backgroundColor: '#120B24', border: '1px solid #2A1B4E', borderRadius: '12px' }} />
+                  <Bar dataKey="value" fill="#3b82f6" radius={[4, 4, 0, 0]} />
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeTab === "enrollments" && (
+        <div className="bg-[#120B24] rounded-2xl border border-[#2A1B4E] overflow-hidden">
+          <table className="w-full text-left text-sm whitespace-nowrap">
+            <thead className="bg-[#0A051A] text-slate-400 text-xs uppercase tracking-wider">
+              <tr>
+                <th className="px-6 py-4 font-semibold">Student Name</th>
+                <th className="px-6 py-4 font-semibold">Enrolled Course</th>
+                <th className="px-6 py-4 font-semibold">Progress</th>
+                <th className="px-6 py-4 font-semibold text-right">Join Date</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-[#2A1B4E]">
+              {[
+                { name: "Alice Cooper", course: "Full-Stack React", progress: "80%", date: "Oct 12, 2023" },
+                { name: "Bob Smith", course: "Advanced System Design", progress: "20%", date: "Oct 10, 2023" },
+                { name: "Charlie Davis", course: "Full-Stack React", progress: "100%", date: "Sep 28, 2023" }
+              ].map((student, idx) => (
+                <tr key={idx} className="hover:bg-white/5 transition-colors">
+                  <td className="px-6 py-4 font-bold text-white">{student.name}</td>
+                  <td className="px-6 py-4 text-slate-300">{student.course}</td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center gap-2">
+                      <div className="w-full bg-slate-800 rounded-full h-2 max-w-[100px]">
+                        <div className="bg-violet-500 h-2 rounded-full" style={{ width: student.progress }}></div>
+                      </div>
+                      <span className="text-xs text-slate-400">{student.progress}</span>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4 text-right text-slate-400">{student.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </>
   );
 }

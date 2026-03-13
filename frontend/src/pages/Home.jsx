@@ -104,10 +104,10 @@ export default function Home() {
           </p>
           
           <div className="flex flex-wrap items-center gap-6">
-            <button className="bg-violet-600 hover:bg-violet-500 text-white px-8 py-3.5 rounded-full font-semibold flex items-center space-x-2 transition-all">
+            <Link to="/register" className="bg-violet-600 hover:bg-violet-500 text-white px-8 py-3.5 rounded-full font-semibold flex items-center space-x-2 transition-all">
               <span>Start Learning</span>
               <ArrowUpRight className="w-4 h-4 ml-1" />
-            </button>
+            </Link>
             <button className="flex items-center space-x-4 text-white group">
               <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:border-violet-500 transition-colors">
                 <Play className="w-4 h-4 text-violet-400 ml-1 group-hover:text-violet-300" />
@@ -307,7 +307,7 @@ export default function Home() {
       </section>
 
       {/* CATEGORIES */}
-      <section className="max-w-7xl mx-auto px-6 lg:px-12 py-32 border-t border-white/5 bg-[#0C061E]">
+      <section className="max-w-[100%]mx-auto px-6 lg:px-12 py-32 border-t border-white/5 bg-[#0C061E]">
         <div className="flex flex-col md:flex-row justify-between md:items-end mb-20 gap-8">
           <div className="max-w-xl">
             <div className="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-white/10 bg-white/5 mb-8">
@@ -329,22 +329,39 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {CATEGORIES.map((cat, i) => (
-            <div key={i} className="bg-[#120B24] border border-[#2A1B4E] rounded-[2rem] p-10 relative overflow-hidden group hover:border-violet-500 transition-colors">
-              <div className="absolute -bottom-8 -right-4 text-[150px] leading-none font-black text-white/[0.03] group-hover:text-violet-500/[0.05] pointer-events-none transition-colors duration-500">
-                {cat.id}
-              </div>
-              <div className="w-14 h-14 rounded-2xl bg-[#080410] border border-[#2A1B4E] flex items-center justify-center mb-16 group-hover:border-violet-500/50 transition-colors">
-                <cat.icon className="w-6 h-6 text-violet-500" />
-              </div>
-              <h3 className="text-2xl font-bold mb-4 relative z-10">{cat.title}</h3>
-              <p className="text-slate-400 text-sm mb-10 relative z-10 leading-relaxed pr-6">{cat.desc}</p>
+            <div 
+              key={i} 
+              className="group relative p-[1px] rounded-[2rem] overflow-hidden transition-all duration-300 hover:shadow-[0_0_30px_rgba(124,58,237,0.2)] hover:-translate-y-2"
+            >
+              {/* Gradient border effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-[#2A1B4E] to-[#120B24] group-hover:from-violet-600 group-hover:via-fuchsia-500 group-hover:to-indigo-600 transition-all duration-500" />
               
-              <button className="flex items-center space-x-2 text-xs font-bold uppercase tracking-wider text-slate-400 group-hover:text-white transition-colors border border-white/10 px-5 py-2.5 rounded-full hover:border-white/30 relative z-10 w-fit">
-                <span>Show More</span>
-                <ArrowUpRight className="w-4 h-4 ml-1" />
-              </button>
+              <div className="relative bg-[#0A051A] rounded-[calc(2rem-1px)] h-full p-8 flex flex-col items-start z-10 overflow-hidden">
+                {/* Number Watermark */}
+                <div className="absolute top-4 right-4 text-[80px] leading-none font-black text-white/[0.02] group-hover:text-violet-500/[0.08] pointer-events-none transition-colors duration-500 transform group-hover:scale-110 group-hover:-rotate-12">
+                  {cat.id}
+                </div>
+
+                {/* Glowing Light on Hover */}
+                <div className="absolute -top-24 -left-24 w-48 h-48 bg-violet-600/30 rounded-full blur-[50px] opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-[#120B24] to-[#1A0F35] border border-white/5 flex items-center justify-center mb-8 relative z-10 group-hover:border-violet-500/30 group-hover:shadow-[0_0_20px_rgba(124,58,237,0.2)] transition-all duration-300">
+                  <cat.icon className="w-8 h-8 text-slate-400 group-hover:text-white transition-colors duration-300" strokeWidth={1.5} />
+                </div>
+                
+                <h3 className="text-2xl font-bold mb-3 relative z-10 text-slate-200 group-hover:text-white transition-colors duration-300">{cat.title}</h3>
+                <p className="text-slate-500 text-sm mb-10 relative z-10 leading-relaxed group-hover:text-slate-300 transition-colors duration-300">{cat.desc}</p>
+                
+                <div className="mt-auto relative z-10">
+                  <button className="flex items-center space-x-2 text-xs font-black uppercase tracking-widest text-violet-400 group-hover:text-fuchsia-400 transition-colors">
+                    <span>Explore Skills</span>
+                    <ArrowUpRight className="w-4 h-4 ml-1 transform group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </button>
+                  <div className="h-px w-0 bg-gradient-to-r from-violet-500 to-fuchsia-500 group-hover:w-full transition-all duration-500 mt-2" />
+                </div>
+              </div>
             </div>
           ))}
         </div>

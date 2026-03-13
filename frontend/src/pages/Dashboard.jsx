@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useAuth } from "../context/AuthContext";
 import { 
   BookOpen, Award, Activity, Settings, 
   ChevronRight, Users, Video, BarChart3, FileText, Plus, Shield, Sparkles
@@ -11,7 +12,8 @@ import InstructorDashboard from "../components/dashboard/InstructorDashboard";
 import AdminDashboard from "../components/dashboard/AdminDashboard";
 
 export default function Dashboard() {
-  const [role, setRole] = useState("student"); // "student", "instructor", "admin"
+  const { user, __devSwitchRole } = useAuth();
+  const role = user?.role || "student";
   const [activeTab, setActiveTab] = useState("overview");
 
   // Navigation Menus structured by role
@@ -41,7 +43,7 @@ export default function Dashboard() {
   };
 
   const handleRoleChange = (newRole) => {
-    setRole(newRole);
+    if (__devSwitchRole) __devSwitchRole(newRole);
     setActiveTab("overview");
   };
 

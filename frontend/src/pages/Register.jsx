@@ -1,21 +1,23 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
-import { Mail, Lock, ArrowRight, Github, Sparkles, Code, Layout } from "lucide-react";
+import { Mail, Lock, ArrowRight, Github, Sparkles, Code, Layout, User } from "lucide-react";
 import { motion } from "framer-motion";
 
-export default function Login() {
+export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
+  const [role, setRole] = useState("student"); // "student" or "instructor"
   const [error, setError] = useState("");
 
-  const { login } = useAuth();
+  const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
-    const result = await login(email, password);
+    const result = await register(name, email, password, role);
 
     if (result.success) {
       navigate("/dashboard");
@@ -48,10 +50,10 @@ export default function Login() {
           </div>
           
           <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-sm">
-            Welcome back to <span className="text-violet-500">excellence</span>.
+            Master the skills of tomorrow, <span className="text-violet-500">today</span>.
           </h2>
           <p className="text-lg text-slate-400 font-medium mb-12 leading-relaxed">
-            Log in to continue your journey and access the latest courses and materials.
+            Join thousands of developers, designers, and creators building the future through elite multi-instructor courses.
           </p>
 
           <div className="grid grid-cols-2 gap-6">
@@ -83,10 +85,10 @@ export default function Login() {
                <span className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-200 to-slate-400 drop-shadow-sm">LuxAcademy<span className="text-violet-500">.</span></span>
             </Link>
             <h1 className="text-3xl font-bold text-white mb-3 tracking-tight">
-              Welcome back
+              Create an account
             </h1>
             <p className="text-slate-400 font-medium">
-              Enter your credentials to access your dashboard.
+              Start your learning journey with world-class instructors.
             </p>
             {error && <p className="text-red-400 text-sm mt-4">{error}</p>}
           </div>
@@ -97,6 +99,51 @@ export default function Login() {
             transition={{ duration: 0.3 }}
           >
             <form className="space-y-5" onSubmit={handleSubmit}>
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">I am signing up as a...</label>
+                <div className="flex gap-4">
+                  <button
+                    type="button"
+                    onClick={() => setRole("student")}
+                    className={`flex-1 py-3 rounded-xl border text-sm font-bold transition-all ${
+                      role === "student" 
+                        ? "bg-violet-600/20 border-violet-500 text-violet-400" 
+                        : "bg-[#120B24] border-[#2A1B4E] text-slate-400 hover:border-slate-500"
+                    }`}
+                  >
+                    Student
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setRole("instructor")}
+                    className={`flex-1 py-3 rounded-xl border text-sm font-bold transition-all ${
+                      role === "instructor" 
+                        ? "bg-fuchsia-600/20 border-fuchsia-500 text-fuchsia-400" 
+                        : "bg-[#120B24] border-[#2A1B4E] text-slate-400 hover:border-slate-500"
+                    }`}
+                  >
+                    Instructor
+                  </button>
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Full Name</label>
+                <div className="relative group">
+                  <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                    <User className="h-5 w-5 text-slate-500 group-focus-within:text-violet-400 transition-colors" />
+                  </div>
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="John Doe" 
+                    required
+                    className="w-full pl-11 pr-4 py-3.5 bg-[#120B24] border border-[#2A1B4E] rounded-xl focus:border-violet-500 focus:shadow-[0_0_15px_rgba(124,58,237,0.15)] outline-none transition-all font-medium text-white placeholder:text-slate-600 text-sm"
+                  />
+                </div>
+              </div>
+              
               <div>
                 <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Email Address</label>
                 <div className="relative group">
@@ -115,12 +162,7 @@ export default function Login() {
               </div>
 
               <div>
-                <div className="flex justify-between items-center mb-2">
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-400">Password</label>
-                  <a href="#" className="flex justify-between items-center" onClick={(e) => e.preventDefault()}>
-                    <label className="text-xs font-bold text-violet-400 hover:text-white transition-colors cursor-pointer">Forgot password?</label>
-                  </a>
-                </div>
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-400 mb-2">Password</label>
                 <div className="relative group">
                   <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
                     <Lock className="h-5 w-5 text-slate-500 group-focus-within:text-violet-400 transition-colors" />
@@ -138,7 +180,7 @@ export default function Login() {
 
               <div className="pt-4">
                 <button type="submit" className="w-full flex items-center justify-center space-x-2 bg-violet-600 hover:bg-violet-500 text-white py-4 rounded-xl font-bold text-sm tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] group mt-6">
-                  <span>Sign In</span>
+                  <span>Create Account</span>
                   <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -167,12 +209,12 @@ export default function Login() {
             </div>
 
             <p className="mt-8 text-center text-sm font-medium text-slate-500">
-              Don't have an account?{" "}
+              Already have an account?{" "}
               <Link 
-                to="/register" 
+                to="/login" 
                 className="text-violet-400 font-bold hover:text-white transition-colors underline-offset-4 hover:underline"
               >
-                Sign up here
+                Log in here
               </Link>
             </p>
           </motion.div>
