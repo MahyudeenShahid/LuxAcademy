@@ -27,31 +27,31 @@ The backend runs with or without MongoDB — it automatically falls back to an i
 > Search, filter by category/level/price. Animated course cards.
 
 ### Course Detail + Reviews
-![Course Detail](docs/screenshots/course-detail.png)
+![Course Detail](docs/img/courses-detail.png)
 > Course overview, lesson curriculum, student reviews with star ratings, and enrolment card.
 
 ### Student Dashboard
-![Student Dashboard](docs/screenshots/student-dashboard.png)
+![Student Dashboard](docs/img/student.png)
 > XP level, daily streak, progress tracker, and certificate download.
 
 ### Instructor Dashboard
-![Instructor Dashboard](docs/screenshots/instructor-dashboard.png)
+![Instructor Dashboard](docs/img/instructor.png)
 > Course management, student enrolments, revenue analytics.
 
 ### Admin Dashboard
-![Admin Dashboard](docs/screenshots/admin-dashboard.png)
+![Admin Dashboard](docs/img/admin.png)
 > Platform analytics, user management, course oversight.
 
 ### Instructors Page
-![Instructors](docs/screenshots/instructors.png)
+![Instructors](docs/img/instruc.png)
 > Public listing of all instructors with stats and featured courses.
 
 ### Instructor Profile
-![Instructor Profile](docs/screenshots/instructor-profile.png)
+![Instructor Profile](docs/img/inst-profile.png)
 > Full profile with bio, published courses, and student reviews.
 
 ### Certificate Viewer
-![Certificate](docs/screenshots/certificate.png)
+![Certificate](docs/img/certificate.png)
 > Downloadable course completion certificate.
 
 ---

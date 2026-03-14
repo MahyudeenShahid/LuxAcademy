@@ -26,11 +26,9 @@ export default function Dashboard() {
   }, [tourKey]);
   const completeTour = () => { localStorage.setItem(tourKey, "true"); setShowTour(false); };
 
-  // Prevent page-level scroll while dashboard is visible; reset scroll from previous pages
+  // Reset scroll position when arriving at this page
   useEffect(() => {
     window.scrollTo(0, 0);
-    document.body.style.overflow = "hidden";
-    return () => { document.body.style.overflow = ""; };
   }, []);
 
   // Sync tab from URL query param (e.g. Navbar links use ?tab=xxx)
@@ -66,7 +64,7 @@ export default function Dashboard() {
 
   return (
     /* Fix double scroll: h-screen + overflow-hidden, single inner scroll on main */
-    <div className="bg-[#080410] h-screen pt-20 flex flex-col md:flex-row text-white font-sans selection:bg-violet-600/30 overflow-hidden relative">
+    <div className="bg-[#080410] min-h-screen pt-20 flex flex-col md:flex-row text-white font-sans selection:bg-violet-600/30 relative">
       {/* First-login guided tour */}
       <AnimatePresence>
         {showTour && (
@@ -78,7 +76,7 @@ export default function Dashboard() {
       <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
       {/* Sidebar — scrolls independently */}
-      <aside className="w-full md:w-72 bg-[#0A051A]/80 backdrop-blur-2xl border-r border-[#2A1B4E] p-6 hidden md:flex flex-col relative z-10 shrink-0 overflow-y-auto">
+      <aside className="w-full md:w-72 bg-[#0A051A]/80 backdrop-blur-2xl border-r border-[#2A1B4E] p-6 hidden md:flex flex-col relative z-10 shrink-0 md:sticky md:top-20 md:self-start md:max-h-[calc(100vh-5rem)] md:overflow-y-auto">
         {/* Profile Card */}
         <div className="bg-[#120B24] border border-[#2A1B4E] rounded-2xl p-4 mb-8 shrink-0">
           <div className="flex items-center space-x-3">
@@ -131,7 +129,7 @@ export default function Dashboard() {
       </aside>
 
       {/* Main Content — single scroll area prevents double scroll */}
-      <main className="flex-1 relative z-10 overflow-y-auto">
+      <main className="flex-1 relative z-10">
         <div className="px-6 lg:px-10 xl:px-12 py-10">
           <header className="mb-10">
             <h1 className="text-3xl font-bold text-white mb-2 tracking-tight">

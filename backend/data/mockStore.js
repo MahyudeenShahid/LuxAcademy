@@ -37,6 +37,30 @@ const IDS = {
   rev4:    'mock-r-4',
   rev5:    'mock-r-5',
   rev6:    'mock-r-6',
+  rev7:    'mock-r-7',
+  rev8:    'mock-r-8',
+  rev9:    'mock-r-9',
+  rev10:   'mock-r-10',
+  rev11:   'mock-r-11',
+  rev12:   'mock-r-12',
+  inst3:   'mock-u-inst3',
+  stud3:   'mock-u-stud3',
+  stud4:   'mock-u-stud4',
+  course7: 'mock-c-7',
+  course8: 'mock-c-8',
+  les9:    'mock-l-9',
+  les10:   'mock-l-10',
+  les11:   'mock-l-11',
+  les12:   'mock-l-12',
+  les13:   'mock-l-13',
+  les14:   'mock-l-14',
+  les15:   'mock-l-15',
+  les16:   'mock-l-16',
+  enroll5: 'mock-e-5',
+  enroll6: 'mock-e-6',
+  enroll7: 'mock-e-7',
+  enroll8: 'mock-e-8',
+  enroll9: 'mock-e-9',
 };
 
 // Pre-hash password once at load time (bcrypt sync, rounds=10 ≈ 65ms each)
@@ -51,6 +75,9 @@ const store = {
     { _id: IDS.inst2, name: 'Sarah Johnson',  email: 'sarah@lms.com',       password: PWD, role: 'instructor', avatar: '', bio: 'UI/UX Designer',          createdAt: new Date('2024-01-10') },
     { _id: IDS.stud1, name: 'Alice Student',  email: 'student@lms.com',     password: PWD, role: 'student',    avatar: '', bio: '',                       createdAt: new Date('2024-02-01') },
     { _id: IDS.stud2, name: 'Bob Learner',    email: 'bob@lms.com',         password: PWD, role: 'student',    avatar: '', bio: '',                       createdAt: new Date('2024-02-15') },
+    { _id: IDS.inst3, name: 'Marcus Lee',     email: 'marcus@lms.com',      password: PWD, role: 'instructor', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150', bio: 'Data scientist and ML engineer. Previously at Google Brain.', createdAt: new Date('2024-01-15') },
+    { _id: IDS.stud3, name: 'Emma Wilson',    email: 'emma@lms.com',        password: PWD, role: 'student',    avatar: '', bio: '',                       createdAt: new Date('2024-03-01') },
+    { _id: IDS.stud4, name: 'David Chen',     email: 'david@lms.com',       password: PWD, role: 'student',    avatar: '', bio: '',                       createdAt: new Date('2024-03-10') },
   ],
 
   courses: [
@@ -102,6 +129,22 @@ const store = {
       thumbnail: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800',
       createdAt: new Date('2024-03-15'),
     },
+    {
+      _id: IDS.course7, instructor: IDS.inst3, isPublished: true,
+      title: 'Machine Learning A–Z',
+      description: 'Go deep on supervised and unsupervised learning, neural networks, SVMs, and decision trees with real-world datasets.',
+      category: 'Data Science', price: 149, level: 'advanced', duration: '40h',
+      thumbnail: 'https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800',
+      createdAt: new Date('2024-04-01'),
+    },
+    {
+      _id: IDS.course8, instructor: IDS.inst1, isPublished: true,
+      title: 'TypeScript for React Developers',
+      description: 'Add type safety to your React apps with TypeScript. Covers generics, interfaces, utility types, and strict-mode best practices.',
+      category: 'Web Development', price: 85, level: 'intermediate', duration: '14h',
+      thumbnail: 'https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800',
+      createdAt: new Date('2024-04-10'),
+    },
   ],
 
   lessons: [
@@ -113,6 +156,18 @@ const store = {
     { _id: IDS.les6, course: IDS.course2, title: 'Prototyping in Figma',       content: 'Build interactive prototypes fast.',          videoUrl: '', order: 3, duration: '80m',  isFree: false },
     { _id: IDS.les7, course: IDS.course3, title: 'Python Basics',              content: 'Variables, loops, and functions.',            videoUrl: '', order: 1, duration: '55m',  isFree: true  },
     { _id: IDS.les8, course: IDS.course3, title: 'Pandas & DataFrames',        content: 'Data manipulation with Pandas.',              videoUrl: '', order: 2, duration: '70m',  isFree: false },
+    // Course 4 — Node.js Microservices
+    { _id: IDS.les9,  course: IDS.course4, title: 'Intro to Microservices',         content: 'What are microservices and why use them? Overview of service boundaries and communication patterns.', videoUrl: '', order: 1, duration: '40m', isFree: true  },
+    { _id: IDS.les10, course: IDS.course4, title: 'Docker & Containers',            content: 'Containerise your Node.js services with Docker. Writing Dockerfiles and docker-compose.yml.',         videoUrl: '', order: 2, duration: '55m', isFree: false },
+    // Course 5 — Graphic Design
+    { _id: IDS.les11, course: IDS.course5, title: 'Intro to Graphic Design',        content: 'Core design principles: balance, contrast, alignment, repetition, and proximity.',                    videoUrl: '', order: 1, duration: '35m', isFree: true  },
+    { _id: IDS.les12, course: IDS.course5, title: 'Working with Adobe Illustrator', content: 'Vectors, paths, and shapes. Creating scalable logos and illustrations.',                               videoUrl: '', order: 2, duration: '60m', isFree: false },
+    // Course 7 — ML A-Z
+    { _id: IDS.les13, course: IDS.course7, title: 'Intro to Machine Learning',      content: 'Supervised vs unsupervised learning. The ML workflow: data → model → evaluate → improve.',           videoUrl: '', order: 1, duration: '35m', isFree: true  },
+    { _id: IDS.les14, course: IDS.course7, title: 'Linear & Logistic Regression',   content: 'Core regression algorithms with scikit-learn. Loss functions, gradient descent, and evaluation metrics.', videoUrl: '', order: 2, duration: '60m', isFree: false },
+    // Course 8 — TypeScript
+    { _id: IDS.les15, course: IDS.course8, title: 'TypeScript Basics',              content: 'Types, interfaces, enums, and the TypeScript compiler. Migrating a JS file to TS step by step.',      videoUrl: '', order: 1, duration: '30m', isFree: true  },
+    { _id: IDS.les16, course: IDS.course8, title: 'Generics & Utility Types',       content: 'Mastering TypeScript generics and built-in utility types: Partial, Required, Pick, Omit, Record.',    videoUrl: '', order: 2, duration: '45m', isFree: false },
   ],
 
   enrollments: [
@@ -120,6 +175,11 @@ const store = {
     { _id: IDS.enroll2, student: IDS.stud1, course: IDS.course2, progress: 80,  enrolledAt: new Date('2024-03-05'), completedAt: null,                  createdAt: new Date('2024-03-05') },
     { _id: IDS.enroll3, student: IDS.stud2, course: IDS.course1, progress: 60,  enrolledAt: new Date('2024-03-10'), completedAt: null,                  createdAt: new Date('2024-03-10') },
     { _id: IDS.enroll4, student: IDS.stud2, course: IDS.course3, progress: 100, enrolledAt: new Date('2024-03-12'), completedAt: new Date('2024-04-01'), createdAt: new Date('2024-03-12') },
+    { _id: IDS.enroll5, student: IDS.stud3, course: IDS.course1, progress: 45,  enrolledAt: new Date('2024-05-01'), completedAt: null,                  createdAt: new Date('2024-05-01') },
+    { _id: IDS.enroll6, student: IDS.stud3, course: IDS.course7, progress: 20,  enrolledAt: new Date('2024-05-10'), completedAt: null,                  createdAt: new Date('2024-05-10') },
+    { _id: IDS.enroll7, student: IDS.stud4, course: IDS.course2, progress: 100, enrolledAt: new Date('2024-05-05'), completedAt: new Date('2024-06-01'), createdAt: new Date('2024-05-05') },
+    { _id: IDS.enroll8, student: IDS.stud4, course: IDS.course5, progress: 70,  enrolledAt: new Date('2024-05-20'), completedAt: null,                  createdAt: new Date('2024-05-20') },
+    { _id: IDS.enroll9, student: IDS.stud1, course: IDS.course8, progress: 55,  enrolledAt: new Date('2024-06-01'), completedAt: null,                  createdAt: new Date('2024-06-01') },
   ],
 
   reviews: [
@@ -129,6 +189,12 @@ const store = {
     { _id: IDS.rev4, user: IDS.stud2, course: IDS.course3, instructor: IDS.inst1, rating: 5, comment: 'The best free Python course I have ever taken. Incredibly detailed and practical. A must for anyone getting into data science.', createdAt: new Date('2024-04-05') },
     { _id: IDS.rev5, user: IDS.stud1, course: IDS.course5, instructor: IDS.inst2, rating: 4, comment: 'Great introduction to graphic design. The Illustrator and Photoshop sections are especially strong. Highly recommended.', createdAt: new Date('2024-04-10') },
     { _id: IDS.rev6, user: IDS.stud2, course: IDS.course6, instructor: IDS.inst1, rating: 5, comment: 'Outstanding mobile development course! Building real cross-platform apps from day one made all the difference.', createdAt: new Date('2024-04-15') },
+    { _id: IDS.rev7,  user: IDS.stud3, course: IDS.course1, instructor: IDS.inst1, rating: 4, comment: "Really well structured course. John's teaching style makes complex topics approachable. Looking forward to more courses!",             createdAt: new Date('2024-05-15') },
+    { _id: IDS.rev8,  user: IDS.stud4, course: IDS.course2, instructor: IDS.inst2, rating: 5, comment: "Sarah is an incredible instructor. This course completely changed how I approach design problems. Absolutely 10/10!",                 createdAt: new Date('2024-06-02') },
+    { _id: IDS.rev9,  user: IDS.stud3, course: IDS.course7, instructor: IDS.inst3, rating: 5, comment: "Marcus explains ML algorithms in a way that finally clicked for me. The hands-on projects with real datasets are excellent.",          createdAt: new Date('2024-05-25') },
+    { _id: IDS.rev10, user: IDS.stud4, course: IDS.course5, instructor: IDS.inst2, rating: 4, comment: "Solid graphic design foundations. The Illustrator and Photoshop sections are especially strong. Great value for the price.",           createdAt: new Date('2024-06-10') },
+    { _id: IDS.rev11, user: IDS.stud1, course: IDS.course8, instructor: IDS.inst1, rating: 5, comment: "Finally a TypeScript course that respects your time! Concise, practical, and directly applied to real React projects.",                createdAt: new Date('2024-06-15') },
+    { _id: IDS.rev12, user: IDS.stud2, course: IDS.course7, instructor: IDS.inst3, rating: 4, comment: "Great depth on neural networks and SVMs. The Kaggle project walkthrough at the end ties everything together beautifully.",             createdAt: new Date('2024-06-20') },
   ],
 };
 

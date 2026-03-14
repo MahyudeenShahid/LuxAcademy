@@ -43,7 +43,7 @@ const seed = async () => {
     console.log("🗑️  Cleared existing data");
 
     /* ── users ── */
-    const [admin, inst1, inst2, inst3, stud1, stud2] = await User.insertMany([
+    const [admin, inst1, inst2, inst3, stud1, stud2, stud3, stud4] = await User.insertMany([
       {
         name: "Admin User", email: "admin@lms.com", password: PWD, role: "admin",
         bio: "Platform administrator keeping LuxAcademy running smoothly.",
@@ -72,11 +72,19 @@ const seed = async () => {
         name: "Bob Learner", email: "bob@lms.com", password: PWD, role: "student",
         bio: "", avatar: "",
       },
+      {
+        name: "Emma Wilson", email: "emma@lms.com", password: PWD, role: "student",
+        bio: "", avatar: "",
+      },
+      {
+        name: "David Chen", email: "david@lms.com", password: PWD, role: "student",
+        bio: "", avatar: "",
+      },
     ]);
-    console.log("👥 Created 6 users");
+    console.log("👥 Created 8 users");
 
     /* ── courses ── */
-    const [c1, c2, c3, c4, c5, c6] = await Course.insertMany([
+    const [c1, c2, c3, c4, c5, c6, c7] = await Course.insertMany([
       {
         title: "Full-Stack React Development",
         description: "Build modern full-stack applications with React, Node.js, and MongoDB from scratch. Covers hooks, context, REST APIs, authentication, and deployment.",
@@ -119,8 +127,22 @@ const seed = async () => {
         level: "advanced", duration: "40h", isPublished: true,
         thumbnail: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800",
       },
+      {
+        title: "Machine Learning A–Z",
+        description: "Go deep on supervised and unsupervised learning, neural networks, SVMs, decision trees, and more. Real datasets, real projects.",
+        instructor: inst3._id, category: "Data Science", price: 149,
+        level: "advanced", duration: "40h", isPublished: true,
+        thumbnail: "https://images.unsplash.com/photo-1555949963-ff9fe0c870eb?w=800",
+      },
+      {
+        title: "TypeScript for React Developers",
+        description: "Add type safety to your React apps with TypeScript. Covers generics, interfaces, utility types, and strict-mode best practices.",
+        instructor: inst1._id, category: "Web Development", price: 85,
+        level: "intermediate", duration: "14h", isPublished: true,
+        thumbnail: "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800",
+      },
     ]);
-    console.log("📚 Created 6 courses");
+    console.log("📚 Created 7 courses");
 
     /* ── lessons ── */
     await Lesson.insertMany([
@@ -145,6 +167,28 @@ const seed = async () => {
         content: "# Python for Data Science\n\nPython is the most popular language for data science and ML.\n\n## Setup\n1. Install Anaconda\n2. Launch Jupyter Notebook\n3. Create your first notebook\n\n## Why Python?\n- Simple syntax\n- Massive ecosystem\n- Industry standard" },
       { course: c5._id, title: "NumPy & Pandas", order: 2, duration: "50m",
         content: "# NumPy & Pandas\n\nThese two libraries are the backbone of data science in Python.\n\n## NumPy\n```python\nimport numpy as np\narr = np.array([1, 2, 3, 4, 5])\nprint(arr.mean())  # 3.0\n```\n\n## Pandas\n```python\nimport pandas as pd\ndf = pd.read_csv('data.csv')\ndf.describe()\n```" },
+      // Course 2 — Node.js API
+      { course: c2._id, title: "Node.js & Express Basics", order: 1, isFree: true, duration: "25m",
+        content: "# Node.js & Express\n\nBuild your first REST API with Express in minutes.\n\n```js\nconst express = require('express');\nconst app = express();\napp.get('/api', (req, res) => res.json({ ok: true }));\napp.listen(5000);\n```" },
+      { course: c2._id, title: "JWT Authentication", order: 2, duration: "40m",
+        content: "# JWT Auth\n\nSecure your API with JSON Web Tokens.\n\n## Flow\n1. User logs in → server signs a JWT\n2. Client stores JWT in localStorage\n3. Client sends JWT in `Authorization: Bearer <token>` header\n4. Server verifies the JWT on every protected route" },
+      { course: c2._id, title: "Testing with Jest & Supertest", order: 3, duration: "35m",
+        content: "# API Testing\n\n```js\nconst request = require('supertest');\nconst app = require('../app');\n\ntest('GET /api/courses returns 200', async () => {\n  const res = await request(app).get('/api/courses');\n  expect(res.status).toBe(200);\n});\n```" },
+      // Course 4 — Figma
+      { course: c4._id, title: "Figma Component Basics", order: 1, isFree: true, duration: "20m",
+        content: "# Figma Components\n\nComponents are reusable design elements that keep your design system consistent.\n\n## Creating a Component\n1. Design your element\n2. Select it\n3. Press `Ctrl+Alt+K` (⌥⌘K on Mac)\n\n> Changes to the master component propagate to all instances automatically." },
+      { course: c4._id, title: "Auto-Layout Deep Dive", order: 2, duration: "45m",
+        content: "# Auto-Layout\n\nAuto-layout lets frames resize automatically based on their content.\n\n## Key Properties\n- Direction: horizontal or vertical\n- Spacing: fixed or auto\n- Padding: uniform or per-side\n- Resizing: fixed, hug contents, fill container" },
+      // Course 6 — React Native
+      { course: c6._id, title: "React Native Setup & First App", order: 1, isFree: true, duration: "30m",
+        content: "# Getting Started with React Native\n\n## Setup Options\n- **Expo** — recommended for beginners (zero config)\n- **React Native CLI** — full control\n\n```jsx\nimport { View, Text } from 'react-native';\nexport default function App() {\n  return <View><Text>Hello, World!</Text></View>;\n}\n```" },
+      { course: c6._id, title: "Navigation with React Navigation", order: 2, duration: "50m",
+        content: "# React Navigation\n\nThe most popular navigation library for React Native.\n\n## Stack Navigator\n```jsx\n<NavigationContainer>\n  <Stack.Navigator>\n    <Stack.Screen name=\"Home\" component={HomeScreen} />\n    <Stack.Screen name=\"Details\" component={DetailsScreen} />\n  </Stack.Navigator>\n</NavigationContainer>\n```" },
+      // Course 7 — ML A-Z
+      { course: c7._id, title: "Intro to Machine Learning", order: 1, isFree: true, duration: "35m",
+        content: "# Machine Learning Overview\n\n## Types of ML\n- **Supervised** — labelled training data (regression, classification)\n- **Unsupervised** — unlabelled data (clustering, dimensionality reduction)\n- **Reinforcement** — learning from rewards\n\n## The ML Workflow\n1. Collect & clean data\n2. Choose & train a model\n3. Evaluate performance\n4. Tune & improve" },
+      { course: c7._id, title: "Linear & Logistic Regression", order: 2, duration: "60m",
+        content: "# Regression Models\n\n## Linear Regression\n```python\nfrom sklearn.linear_model import LinearRegression\nmodel = LinearRegression()\nmodel.fit(X_train, y_train)\nprint(model.score(X_test, y_test))\n```\n\n## Logistic Regression (Classification)\n```python\nfrom sklearn.linear_model import LogisticRegression\nmodel = LogisticRegression()\nmodel.fit(X_train, y_train)\n```" },
     ]);
     console.log("📖 Created lessons");
 
@@ -156,8 +200,27 @@ const seed = async () => {
       { student: stud2._id, course: c1._id, progress: 33 },
       { student: stud2._id, course: c2._id, progress: 50 },
       { student: stud2._id, course: c4._id, progress: 0 },
+      { student: stud3._id, course: c1._id, progress: 45 },
+      { student: stud3._id, course: c7._id, progress: 20 },
+      { student: stud4._id, course: c3._id, progress: 100, completedAt: new Date("2025-02-20") },
+      { student: stud4._id, course: c5._id, progress: 70 },
+      { student: stud1._id, course: c6._id, progress: 55 },
     ]);
     console.log("🎓 Created enrollments");
+
+    /* ── reviews ── */
+    await Review.insertMany([
+      { user: stud1._id, course: c1._id, instructor: inst1._id, rating: 5, comment: "Absolutely outstanding! This course transformed the way I think about full-stack development. John explains complex concepts with remarkable clarity." },
+      { user: stud2._id, course: c1._id, instructor: inst1._id, rating: 4, comment: "Very comprehensive and well-structured. The hands-on projects really helped solidify the concepts. Would love even more exercises." },
+      { user: stud1._id, course: c3._id, instructor: inst2._id, rating: 5, comment: "Sarah is a phenomenal instructor. Her passion for design is infectious and the course content is absolutely world-class." },
+      { user: stud2._id, course: c2._id, instructor: inst1._id, rating: 4, comment: "Excellent API course. The JWT auth section was especially well done. Great pacing throughout." },
+      { user: stud3._id, course: c1._id, instructor: inst1._id, rating: 4, comment: "Really well structured course. John's teaching style makes complex topics approachable. Looking forward to more courses!" },
+      { user: stud3._id, course: c7._id, instructor: inst3._id, rating: 5, comment: "Marcus explains ML algorithms in a way that finally clicked for me. The hands-on Kaggle projects are excellent." },
+      { user: stud4._id, course: c3._id, instructor: inst2._id, rating: 5, comment: "Sarah is an incredible instructor. This course completely changed how I approach design problems. Absolutely 10/10!" },
+      { user: stud4._id, course: c5._id, instructor: inst3._id, rating: 4, comment: "The best Python data science course I have taken. Incredibly detailed and practical. A must for anyone getting into data science." },
+      { user: stud1._id, course: c6._id, instructor: inst1._id, rating: 5, comment: "Finally a TypeScript course that respects your time! Concise, practical, and directly applied to real React projects." },
+    ]);
+    console.log("⭐ Created reviews");
 
     console.log("\n🌱 Database seeded successfully!\n");
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
@@ -169,6 +232,8 @@ const seed = async () => {
     console.log("  Instructor →  marcus@lms.com      (Marcus Lee)");
     console.log("  Student    →  student@lms.com     (Alice)");
     console.log("  Student    →  bob@lms.com         (Bob)");
+    console.log("  Student    →  emma@lms.com        (Emma Wilson)");
+    console.log("  Student    →  david@lms.com       (David Chen)");
     console.log("━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
 
     process.exit(0);
