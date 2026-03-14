@@ -198,7 +198,7 @@ cd ../frontend && npm run dev   # Terminal 2
 ## Project Structure
 
 ```
-project_ecom/
+LuxAcademy/
 ├── backend/                  # Express REST API
 │   ├── controllers/          # Route handlers
 │   ├── models/               # Mongoose schemas (5 models)
