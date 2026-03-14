@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { getCourseByIdApi } from "../services/courseService";
 import { enrollInCourseApi, checkEnrollmentApi } from "../services/enrollmentService";
+import ReviewSection from "../components/ReviewSection";
 
 function getYouTubeId(url) {
   if (!url) return null;
@@ -314,6 +315,9 @@ export default function CourseDetail() {
                 )}
               </div>
             </motion.div>
+
+            {/* Reviews */}
+            <ReviewSection courseId={id} isEnrolled={isEnrolled} />
           </div>
 
           {/* Floating Action Card */}

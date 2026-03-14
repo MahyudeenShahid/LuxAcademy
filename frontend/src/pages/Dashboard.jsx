@@ -26,8 +26,9 @@ export default function Dashboard() {
   }, [tourKey]);
   const completeTour = () => { localStorage.setItem(tourKey, "true"); setShowTour(false); };
 
-  // Prevent page-level scroll while dashboard is visible (footer below causes double scroll)
+  // Prevent page-level scroll while dashboard is visible; reset scroll from previous pages
   useEffect(() => {
+    window.scrollTo(0, 0);
     document.body.style.overflow = "hidden";
     return () => { document.body.style.overflow = ""; };
   }, []);

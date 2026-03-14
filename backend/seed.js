@@ -21,6 +21,7 @@ const User       = require("./models/User");
 const Course     = require("./models/Course");
 const Lesson     = require("./models/Lesson");
 const Enrollment = require("./models/Enrollment");
+const Review     = require("./models/Review");
 
 /* ── helpers ── */
 const hash = (p) => bcrypt.hashSync(p, 10);
@@ -37,6 +38,7 @@ const seed = async () => {
       Course.deleteMany({}),
       Lesson.deleteMany({}),
       Enrollment.deleteMany({}),
+      Review.deleteMany({}),
     ]);
     console.log("🗑️  Cleared existing data");
 

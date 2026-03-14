@@ -3,9 +3,10 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import {
   Users, BookOpen, ChevronLeft, Clock, Star,
-  GraduationCap, Award, ExternalLink, DollarSign, BarChart3
+  GraduationCap, Award, ExternalLink, DollarSign, BarChart3, MessageSquare
 } from "lucide-react";
 import { getInstructorProfileApi } from "../services/userService";
+import { getInstructorReviewsApi } from "../services/reviewService";
 
 const LEVEL_COLOR = {
   beginner:     "text-emerald-400 bg-emerald-500/10 border-emerald-500/30",
@@ -20,6 +21,8 @@ export default function InstructorProfile() {
   const [courses, setCourses]       = useState([]);
   const [loading, setLoading]       = useState(true);
   const [error, setError]           = useState("");
+  const [reviews, setReviews]       = useState([]);
+  const [avgRating, setAvgRating]   = useState(0);
 
   useEffect(() => {
     setLoading(true);
@@ -31,6 +34,12 @@ export default function InstructorProfile() {
         setError(res.message || "Instructor not found.");
       }
       setLoading(false);
+    });
+  }, [id]);
+
+  useEffect(() => {
+    getInstructorReviewsApi(id).then((res) => {
+      if (res.success) { setReviews(res.reviews); setAvgRating(res.avgRating); }
     });
   }, [id]);
 
@@ -239,6 +248,65 @@ export default function InstructorProfile() {
             ))}
           </div>
         </div>
+
+        {/* Reviews section */}
+        {reviews.length > 0 && (
+          <div className="mt-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="text-xl font-black text-white flex items-center gap-2">
+                <MessageSquare className="w-5 h-5 text-violet-400" />
+                Student Reviews
+                <span className="ml-1 text-sm font-bold text-slate-500">({reviews.length})</span>
+              </h2>
+              <div className="flex items-center gap-1.5 bg-[#120B24] border border-amber-500/20 px-3 py-1.5 rounded-xl">
+                <Star className="w-4 h-4 fill-amber-400 text-amber-400" />
+                <span className="text-amber-400 font-black text-sm">{avgRating}</span>
+                <span className="text-slate-500 text-xs">avg</span>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-2 gap-4">
+              {reviews.map((review, i) => (
+                <motion.div
+                  key={review._id}
+                  initial={{ opacity: 0, y: 12 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: i * 0.06 }}
+                  className="bg-[#120B24] border border-[#2A1B4E] rounded-2xl p-5"
+                >
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-9 h-9 rounded-full overflow-hidden border border-violet-500/30 shrink-0">
+                      {review.user?.avatar ? (
+                        <img src={review.user.avatar} alt={review.user.name} className="w-full h-full object-cover" />
+                      ) : (
+                        <div className="w-full h-full bg-violet-600/30 flex items-center justify-center text-violet-300 text-xs font-bold">
+                          {review.user?.name?.[0]?.toUpperCase() || "?"}
+                        </div>
+                      )}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center justify-between flex-wrap gap-1">
+                        <span className="font-semibold text-white text-sm truncate">{review.user?.name || "Student"}</span>
+                        <div className="flex text-amber-400">
+                          {[1,2,3,4,5].map((s) => (
+                            <Star key={s} size={12} className={s <= review.rating ? "fill-amber-400 text-amber-400" : "fill-transparent text-slate-600"} />
+                          ))}
+                        </div>
+                      </div>
+                      {review.course?.title && (
+                        <p className="text-[10px] text-violet-400 font-semibold mt-0.5 truncate">{review.course.title}</p>
+                      )}
+                    </div>
+                  </div>
+                  <p className="text-slate-300 text-sm leading-relaxed line-clamp-3">{review.comment}</p>
+                  <p className="text-xs text-slate-600 mt-2">
+                    {new Date(review.createdAt).toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" })}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );

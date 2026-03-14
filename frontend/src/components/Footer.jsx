@@ -64,10 +64,21 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/5 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-slate-600">
+        <div className="border-t border-white/5 mt-16 pt-8 flex flex-col md:flex-row justify-between items-center text-xs font-medium text-slate-600 gap-3">
           <p>&copy; {new Date().getFullYear()} LuxAcademy LMS. All rights reserved.</p>
-          <div className="flex space-x-6 mt-4 md:mt-0">
+          <div className="flex flex-col sm:flex-row items-center gap-4">
             <p>Designed with <span className="text-rose-500">♥</span> for continuous learning.</p>
+            <p>
+              Developed by{" "}
+              <a
+                href="https://mahyudeen.netlify.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-violet-400 hover:text-violet-300 transition-colors font-semibold"
+              >
+                Mahyudeen Shahid
+              </a>
+            </p>
           </div>
         </div>
       </div>
