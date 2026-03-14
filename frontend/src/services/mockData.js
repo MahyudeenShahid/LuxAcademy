@@ -195,7 +195,41 @@ export const MOCK_INSTRUCTORS = [
   },
 ];
 
-/* ── Mock instructor profile (fallback for /api/users/instructors/:id) ── */
+/* ── Mock reviews ── */
+export const MOCK_REVIEWS = {
+  // Reviews for course c1
+  c1: [
+    { _id: 'r1', user: { _id: 'u1', name: 'Alex Carter',  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' }, rating: 5, comment: 'Absolutely outstanding! This course transformed the way I think about UX design. Sarah explains complex concepts with remarkable clarity.', createdAt: '2024-10-20' },
+    { _id: 'r2', user: { _id: 'u4', name: 'John Smith',   avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150' }, rating: 4, comment: 'Very comprehensive and well-structured. The wireframing section was especially helpful. Would love more advanced Figma exercises.', createdAt: '2024-11-05' },
+    { _id: 'r3', user: { _id: 'u6', name: 'Liam Garcia',  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' }, rating: 5, comment: 'Best UX course available online. Real-world projects and clear explanations make this a must-have for any aspiring designer.', createdAt: '2024-11-15' },
+  ],
+  // Reviews for course c2
+  c2: [
+    { _id: 'r4', user: { _id: 'u1', name: 'Alex Carter',  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' }, rating: 5, comment: 'The bootcamp structure is perfect. Emma keeps you engaged throughout and the React section alone is worth the price.', createdAt: '2024-11-10' },
+    { _id: 'r5', user: { _id: 'u6', name: 'Liam Garcia',  avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150' }, rating: 4, comment: 'Packed with practical content. Went from zero to building full React apps in just a few weeks.', createdAt: '2024-12-01' },
+  ],
+  // Reviews for course c3
+  c3: [
+    { _id: 'r6', user: { _id: 'u4', name: 'John Smith',   avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150' }, rating: 5, comment: 'Incredible introduction to graphic design. The typography module alone changed how I look at every website I visit.', createdAt: '2024-10-18' },
+  ],
+  // Reviews for course c4
+  c4: [
+    { _id: 'r7', user: { _id: 'u1', name: 'Alex Carter',  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' }, rating: 4, comment: 'Great data science foundation. The Pandas and Matplotlib walkthroughs are gold. Looking forward to the advanced follow-up!', createdAt: '2024-12-10' },
+  ],
+};
+
+// Per-instructor reviews (fallback for /api/users/instructors/:id/reviews)
+export const MOCK_INSTRUCTOR_REVIEWS = {
+  u2: [
+    { _id: 'r1', user: { _id: 'u1', name: 'Alex Carter', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' }, course: { _id: 'c1', title: 'User Experience Design Fundamentals' }, rating: 5, comment: 'Absolutely outstanding! This course transformed the way I think about UX design.', createdAt: '2024-10-20' },
+    { _id: 'r2', user: { _id: 'u4', name: 'John Smith',  avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150' }, course: { _id: 'c1', title: 'User Experience Design Fundamentals' }, rating: 4, comment: 'Very comprehensive. The wireframing section was especially helpful.', createdAt: '2024-11-05' },
+    { _id: 'r6', user: { _id: 'u4', name: 'John Smith',  avatar: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=150' }, course: { _id: 'c3', title: 'Introduction to Graphic Design' }, rating: 5, comment: 'Incredible design course. The typography module changed how I see every website.', createdAt: '2024-10-18' },
+  ],
+  u5: [
+    { _id: 'r4', user: { _id: 'u1', name: 'Alex Carter', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' }, course: { _id: 'c2', title: 'Frontend Web Development Bootcamp' }, rating: 5, comment: 'The bootcamp structure is perfect. Emma keeps you engaged throughout.', createdAt: '2024-11-10' },
+    { _id: 'r7', user: { _id: 'u1', name: 'Alex Carter', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150' }, course: { _id: 'c4', title: "Beginner's Guide to Data Analysis" }, rating: 4, comment: 'Great data science foundation. The Pandas walkthroughs are gold.', createdAt: '2024-12-10' },
+  ],
+};
 export const MOCK_INSTRUCTOR_PROFILE = {
   instructor: {
     _id: 'u2',

@@ -65,7 +65,7 @@ export default function Dashboard() {
 
   return (
     /* Fix double scroll: h-screen + overflow-hidden, single inner scroll on main */
-    <div className="bg-[#080410] h-screen pt-16 flex flex-col md:flex-row text-white font-sans selection:bg-violet-600/30 overflow-hidden relative">
+    <div className="bg-[#080410] h-screen pt-20 flex flex-col md:flex-row text-white font-sans selection:bg-violet-600/30 overflow-hidden relative">
       {/* First-login guided tour */}
       <AnimatePresence>
         {showTour && (

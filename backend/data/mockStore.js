@@ -23,8 +23,20 @@ const IDS = {
   les2:    'mock-l-2',
   les3:    'mock-l-3',
   les4:    'mock-l-4',
+  les5:    'mock-l-5',
+  les6:    'mock-l-6',
+  les7:    'mock-l-7',
+  les8:    'mock-l-8',
   enroll1: 'mock-e-1',
   enroll2: 'mock-e-2',
+  enroll3: 'mock-e-3',
+  enroll4: 'mock-e-4',
+  rev1:    'mock-r-1',
+  rev2:    'mock-r-2',
+  rev3:    'mock-r-3',
+  rev4:    'mock-r-4',
+  rev5:    'mock-r-5',
+  rev6:    'mock-r-6',
 };
 
 // Pre-hash password once at load time (bcrypt sync, rounds=10 ≈ 65ms each)
@@ -93,15 +105,30 @@ const store = {
   ],
 
   lessons: [
-    { _id: IDS.les1, course: IDS.course1, title: 'Introduction to React',  content: 'Overview of the React ecosystem.',   videoUrl: '', order: 1, duration: '45m', isFree: true  },
-    { _id: IDS.les2, course: IDS.course1, title: 'State and Props',        content: 'Core React concepts in depth.',      videoUrl: '', order: 2, duration: '60m', isFree: false },
-    { _id: IDS.les3, course: IDS.course1, title: 'Hooks Deep Dive',        content: 'useState, useEffect, custom hooks.', videoUrl: '', order: 3, duration: '75m', isFree: false },
-    { _id: IDS.les4, course: IDS.course2, title: 'Design Fundamentals',    content: 'Core design principles.',            videoUrl: '', order: 1, duration: '50m', isFree: true  },
+    { _id: IDS.les1, course: IDS.course1, title: 'Introduction to React',      content: 'Overview of the React ecosystem.',            videoUrl: '', order: 1, duration: '45m',  isFree: true  },
+    { _id: IDS.les2, course: IDS.course1, title: 'State and Props',            content: 'Core React concepts in depth.',               videoUrl: '', order: 2, duration: '60m',  isFree: false },
+    { _id: IDS.les3, course: IDS.course1, title: 'Hooks Deep Dive',            content: 'useState, useEffect, custom hooks.',          videoUrl: '', order: 3, duration: '75m',  isFree: false },
+    { _id: IDS.les4, course: IDS.course2, title: 'Design Fundamentals',        content: 'Core design principles.',                     videoUrl: '', order: 1, duration: '50m',  isFree: true  },
+    { _id: IDS.les5, course: IDS.course2, title: 'Colour Theory & Typography', content: 'Using colour and type to create hierarchy.',  videoUrl: '', order: 2, duration: '65m',  isFree: false },
+    { _id: IDS.les6, course: IDS.course2, title: 'Prototyping in Figma',       content: 'Build interactive prototypes fast.',          videoUrl: '', order: 3, duration: '80m',  isFree: false },
+    { _id: IDS.les7, course: IDS.course3, title: 'Python Basics',              content: 'Variables, loops, and functions.',            videoUrl: '', order: 1, duration: '55m',  isFree: true  },
+    { _id: IDS.les8, course: IDS.course3, title: 'Pandas & DataFrames',        content: 'Data manipulation with Pandas.',              videoUrl: '', order: 2, duration: '70m',  isFree: false },
   ],
 
   enrollments: [
-    { _id: IDS.enroll1, student: IDS.stud1, course: IDS.course1, progress: 35, enrolledAt: new Date('2024-03-01'), completedAt: null, createdAt: new Date('2024-03-01') },
-    { _id: IDS.enroll2, student: IDS.stud1, course: IDS.course2, progress: 80, enrolledAt: new Date('2024-03-05'), completedAt: null, createdAt: new Date('2024-03-05') },
+    { _id: IDS.enroll1, student: IDS.stud1, course: IDS.course1, progress: 100, enrolledAt: new Date('2024-03-01'), completedAt: new Date('2024-03-20'), createdAt: new Date('2024-03-01') },
+    { _id: IDS.enroll2, student: IDS.stud1, course: IDS.course2, progress: 80,  enrolledAt: new Date('2024-03-05'), completedAt: null,                  createdAt: new Date('2024-03-05') },
+    { _id: IDS.enroll3, student: IDS.stud2, course: IDS.course1, progress: 60,  enrolledAt: new Date('2024-03-10'), completedAt: null,                  createdAt: new Date('2024-03-10') },
+    { _id: IDS.enroll4, student: IDS.stud2, course: IDS.course3, progress: 100, enrolledAt: new Date('2024-03-12'), completedAt: new Date('2024-04-01'), createdAt: new Date('2024-03-12') },
+  ],
+
+  reviews: [
+    { _id: IDS.rev1, user: IDS.stud1, course: IDS.course1, instructor: IDS.inst1, rating: 5, comment: 'Absolutely outstanding! This course transformed the way I think about full-stack development. John explains complex concepts with remarkable clarity.', createdAt: new Date('2024-03-21') },
+    { _id: IDS.rev2, user: IDS.stud2, course: IDS.course1, instructor: IDS.inst1, rating: 4, comment: 'Very comprehensive and well-structured. The hands-on projects really helped solidify the concepts. Would love even more exercises.', createdAt: new Date('2024-03-25') },
+    { _id: IDS.rev3, user: IDS.stud1, course: IDS.course2, instructor: IDS.inst2, rating: 5, comment: 'Sarah is a phenomenal instructor. Her passion for design is infectious and the course content is absolutely world-class.', createdAt: new Date('2024-03-28') },
+    { _id: IDS.rev4, user: IDS.stud2, course: IDS.course3, instructor: IDS.inst1, rating: 5, comment: 'The best free Python course I have ever taken. Incredibly detailed and practical. A must for anyone getting into data science.', createdAt: new Date('2024-04-05') },
+    { _id: IDS.rev5, user: IDS.stud1, course: IDS.course5, instructor: IDS.inst2, rating: 4, comment: 'Great introduction to graphic design. The Illustrator and Photoshop sections are especially strong. Highly recommended.', createdAt: new Date('2024-04-10') },
+    { _id: IDS.rev6, user: IDS.stud2, course: IDS.course6, instructor: IDS.inst1, rating: 5, comment: 'Outstanding mobile development course! Building real cross-platform apps from day one made all the difference.', createdAt: new Date('2024-04-15') },
   ],
 };
 
@@ -164,7 +191,7 @@ function applySelect(obj, select) {
 }
 
 // Ref field → collection name mapping
-const refMap = { instructor: 'users', student: 'users', course: 'courses' };
+const refMap = { instructor: 'users', student: 'users', course: 'courses', user: 'users' };
 
 /**
  * Populate one reference field on an item.
@@ -478,10 +505,11 @@ function createMockModel(collName) {
   };
 }
 
-// ━━━ Export four mock models ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━━ Export five mock models ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 module.exports = {
   MockUser:       createMockModel('users'),
   MockCourse:     createMockModel('courses'),
   MockLesson:     createMockModel('lessons'),
   MockEnrollment: createMockModel('enrollments'),
+  MockReview:     createMockModel('reviews'),
 };

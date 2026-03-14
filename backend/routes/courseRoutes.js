@@ -14,6 +14,7 @@ const {
   updateLesson,
   deleteLesson,
 } = require('../controllers/lessonController');
+const { createReview, getCourseReviews, deleteReview } = require('../controllers/reviewController');
 const { protect } = require('../middleware/authMiddleware');
 const { authorize } = require('../middleware/roleMiddleware');
 
@@ -30,5 +31,10 @@ router.get('/:courseId/lessons', protect, getLessons);
 router.post('/:courseId/lessons', protect, authorize('instructor', 'admin'), createLesson);
 router.put('/:courseId/lessons/:id', protect, authorize('instructor', 'admin'), updateLesson);
 router.delete('/:courseId/lessons/:id', protect, authorize('instructor', 'admin'), deleteLesson);
+
+// Nested review routes  /api/courses/:courseId/reviews
+router.get('/:courseId/reviews', getCourseReviews);
+router.post('/:courseId/reviews', protect, authorize('student'), createReview);
+router.delete('/:courseId/reviews/:id', protect, deleteReview);
 
 module.exports = router;
