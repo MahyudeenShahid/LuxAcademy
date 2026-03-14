@@ -119,6 +119,8 @@ function matchesFilter(item, filter) {
       if (val.$regex !== undefined) {
         const re = new RegExp(val.$regex, val.$options || '');
         if (!re.test(String(item[key] ?? ''))) return false;
+      } else if (val.$in !== undefined) {
+        if (!val.$in.map(String).includes(String(item[key]))) return false;
       } else if (val.$gte !== undefined) {
         if (item[key] < val.$gte) return false;
       } else {

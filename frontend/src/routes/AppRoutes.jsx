@@ -9,6 +9,8 @@ import Register from "../pages/Register";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
 import Pricing from "../pages/Pricing";
+import LessonViewer from "../pages/LessonViewer";
+import Checkout from "../pages/Checkout";
 
 export default function AppRoutes() {
   return (
@@ -17,17 +19,11 @@ export default function AppRoutes() {
       <Route path="/about" element={<About />} />
       <Route path="/courses" element={<Courses />} />
       <Route path="/courses/:id" element={<CourseDetail />} />
-      
-      {/* Protected Dashboard Route */}
-      <Route 
-        path="/dashboard" 
-        element={
-          <ProtectedRoute>
-            <Dashboard />
-          </ProtectedRoute>
-        } 
-      />
-      
+      <Route path="/learn/:courseId/lessons/:lessonId" element={<ProtectedRoute><LessonViewer /></ProtectedRoute>} />
+      <Route path="/checkout/:courseId" element={<ProtectedRoute><Checkout /></ProtectedRoute>} />
+
+      <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />

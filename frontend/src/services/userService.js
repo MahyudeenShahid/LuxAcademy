@@ -40,3 +40,13 @@ export const getAllEnrollmentsApi = async () => {
     return { success: false, enrollments: [] };
   }
 };
+
+export const updateUserRoleApi = async (id, role) => {
+  try {
+    const { data } = await api.put(`/users/${id}`, { role });
+    return { success: true, user: data.user };
+  } catch (err) {
+    if (isOfflineError(err)) return { success: true, user: { _id: id, role } };
+    return { success: false, message: err.response?.data?.message || 'Failed to update role' };
+  }
+};

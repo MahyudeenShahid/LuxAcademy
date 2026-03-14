@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { Star, Clock, Award, PlayCircle, FileText, CheckCircle, ChevronRight, ChevronDown, ChevronUp, User, Share2, Heart, MonitorPlay, Lock } from "lucide-react";
+import { Star, Clock, Award, PlayCircle, FileText, CheckCircle, ChevronRight, ChevronDown, ChevronUp, User, Share2, Heart, MonitorPlay, Lock, ExternalLink } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "../context/AuthContext";
 import { getCourseByIdApi } from "../services/courseService";
@@ -67,6 +67,9 @@ export default function CourseDetail() {
 
   const handleEnroll = async () => {
     if (!user) { navigate('/login'); return; }
+    // Paid course → go to checkout
+    if (course.price > 0) { navigate(`/checkout/${id}`); return; }
+    // Free course → enroll directly
     setEnrolling(true);
     const result = await enrollInCourseApi(id);
     if (result.success) {
@@ -246,14 +249,28 @@ export default function CourseDetail() {
                           >
                             <div className="px-5 pb-5">
                               {canWatch ? (
-                                lesson.videoUrl ? (
-                                  <VideoPlayer url={lesson.videoUrl} />
-                                ) : (
-                                  <div className="mt-4 flex items-center gap-3 p-4 rounded-xl bg-[#0A051A]/70 border border-[#2A1B4E] text-slate-400 text-sm">
-                                    <FileText className="w-5 h-5 text-violet-400 shrink-0" />
-                                    <span>No video for this lesson yet. Check back later.</span>
-                                  </div>
-                                )
+                                <div className="space-y-4">
+                                  {lesson.videoUrl && <VideoPlayer url={lesson.videoUrl} />}
+                                  {lesson.content && (
+                                    <div className="mt-3 p-4 rounded-xl bg-[#0A051A]/70 border border-[#2A1B4E]">
+                                      <p className="text-slate-300 text-sm leading-relaxed line-clamp-3">{lesson.content}</p>
+                                    </div>
+                                  )}
+                                  {!lesson.videoUrl && !lesson.content && (
+                                    <div className="mt-4 flex items-center gap-3 p-4 rounded-xl bg-[#0A051A]/70 border border-[#2A1B4E] text-slate-400 text-sm">
+                                      <FileText className="w-5 h-5 text-violet-400 shrink-0" />
+                                      <span>No content added yet. Check back later.</span>
+                                    </div>
+                                  )}
+                                  {isEnrolled && (
+                                    <Link
+                                      to={`/learn/${id}/lessons/${lesson._id}`}
+                                      className="mt-2 inline-flex items-center gap-2 bg-violet-600 hover:bg-violet-500 text-white px-5 py-2.5 rounded-xl font-bold text-sm transition-all"
+                                    >
+                                      <ExternalLink className="w-4 h-4" /> Open Full Lesson
+                                    </Link>
+                                  )}
+                                </div>
                               ) : (
                                 <div className="mt-4 flex flex-col items-center gap-3 p-6 rounded-xl bg-[#0A051A]/70 border border-[#2A1B4E] text-center">
                                   <Lock className="w-8 h-8 text-slate-500" />
@@ -263,7 +280,7 @@ export default function CourseDetail() {
                                     disabled={enrolling}
                                     className="mt-1 px-6 py-2 bg-violet-600 hover:bg-violet-500 disabled:opacity-60 text-white rounded-xl font-bold text-xs tracking-widest uppercase transition-all"
                                   >
-                                    {enrolling ? 'Enrolling…' : user ? 'Enroll Now' : 'Login to Enroll'}
+                                    {enrolling ? 'Processing…' : user ? (course.price > 0 ? `Enroll for $${course.price}` : 'Enroll Free') : 'Login to Enroll'}
                                   </button>
                                 </div>
                               )}
@@ -331,16 +348,29 @@ export default function CourseDetail() {
                 )}
 
                 {isEnrolled ? (
-                  <div className="w-full bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 py-4 rounded-xl font-bold text-sm tracking-widest uppercase text-center mb-4">
-                    ✓ Already Enrolled
-                  </div>
+                  <>
+                    <div className="w-full bg-emerald-600/20 border border-emerald-500/40 text-emerald-400 py-4 rounded-xl font-bold text-sm tracking-widest uppercase text-center mb-3">
+                      ✓ Already Enrolled
+                    </div>
+                    {lessons.length > 0 && (
+                      <Link
+                        to={`/learn/${id}/lessons/${lessons[0]._id}`}
+                        className="w-full bg-violet-600 hover:bg-violet-500 text-white py-4 rounded-xl font-bold text-sm tracking-widest uppercase transition-all text-center block mb-4"
+                      >
+                        Continue Learning →
+                      </Link>
+                    )}
+                  </>
                 ) : (
                   <button
                     onClick={handleEnroll}
                     disabled={enrolling}
                     className="w-full bg-violet-600 hover:bg-violet-500 disabled:opacity-60 text-white py-4 rounded-xl font-bold text-sm tracking-widest uppercase transition-all shadow-[0_0_20px_rgba(124,58,237,0.3)] hover:shadow-[0_0_30px_rgba(124,58,237,0.5)] mb-4"
                   >
-                    {enrolling ? 'Enrolling…' : user ? 'Enroll Now' : 'Login to Enroll'}
+                    {enrolling ? 'Processing…'
+                     : !user ? 'Login to Enroll'
+                     : course.price > 0 ? `Enroll for $${course.price.toFixed(2)}`
+                     : 'Enroll Free'}
                   </button>
                 )}
                 <button className="w-full bg-transparent hover:bg-[#1A103C] text-white border border-[#2A1B4E] py-4 rounded-xl font-bold text-sm tracking-widest uppercase transition-colors">

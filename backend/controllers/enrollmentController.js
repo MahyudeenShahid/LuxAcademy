@@ -123,4 +123,23 @@ const getAllEnrollments = async (req, res) => {
   }
 };
 
-module.exports = { enrollInCourse, getMyCourses, updateProgress, checkEnrollment, getAllEnrollments };
+// @desc    Get enrollments for courses taught by the logged-in instructor
+// @route   GET /api/enrollments/my-students
+// @access  Instructor
+const getInstructorEnrollments = async (req, res) => {
+  try {
+    const courses = await Course.find({ instructor: req.user._id });
+    const courseIds = courses.map((c) => c._id);
+
+    const enrollments = await Enrollment.find({ course: { $in: courseIds } })
+      .populate('student', 'name email avatar')
+      .populate('course', 'title thumbnail')
+      .sort({ enrolledAt: -1 });
+
+    res.json({ success: true, count: enrollments.length, enrollments });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { enrollInCourse, getMyCourses, updateProgress, checkEnrollment, getAllEnrollments, getInstructorEnrollments };

@@ -107,4 +107,36 @@ const getAnalytics = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, getUserById, deleteUser, getAnalytics };
+// @desc    Update user role
+// @route   PUT /api/users/:id
+// @access  Admin
+const updateUserRole = async (req, res) => {
+  try {
+    const { role } = req.body;
+    if (!['student', 'instructor', 'admin'].includes(role)) {
+      return res.status(400).json({ success: false, message: 'Invalid role. Must be student, instructor, or admin' });
+    }
+
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
+    // Prevent removing the last admin
+    if (user.role === 'admin' && role !== 'admin') {
+      const adminCount = await User.countDocuments({ role: 'admin' });
+      if (adminCount <= 1) {
+        return res.status(400).json({ success: false, message: 'Cannot demote the last admin' });
+      }
+    }
+
+    user.role = role;
+    await user.save();
+
+    res.json({ success: true, user: { _id: user._id, name: user.name, email: user.email, role: user.role } });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { getAllUsers, getUserById, deleteUser, getAnalytics, updateUserRole };

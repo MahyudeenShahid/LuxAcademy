@@ -118,6 +118,13 @@ export const MOCK_ENROLLMENTS = [
   { _id: 'e3', student: MOCK_USERS[0], course: MOCK_COURSES[2], progress: 100, enrolledAt: '2024-09-20' },
 ];
 
+export const MOCK_INSTRUCTOR_ENROLLMENTS = [
+  { _id: 'e1', student: MOCK_USERS[0], course: MOCK_COURSES[0], progress: 68, enrolledAt: '2024-10-12' },
+  { _id: 'e4', student: MOCK_USERS[3], course: MOCK_COURSES[0], progress: 35, enrolledAt: '2024-11-01' },
+  { _id: 'e5', student: MOCK_USERS[5], course: MOCK_COURSES[0], progress: 100, enrolledAt: '2024-09-20' },
+  { _id: 'e6', student: MOCK_USERS[0], course: MOCK_COURSES[2], progress: 50, enrolledAt: '2024-10-05' },
+];
+
 export const MOCK_ANALYTICS = {
   users: { total: 45210, students: 44520, instructors: 342, admins: 5 },
   courses: { total: 1250, published: 980 },

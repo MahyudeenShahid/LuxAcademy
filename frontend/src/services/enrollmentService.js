@@ -1,5 +1,5 @@
 import api from './api';
-import { MOCK_ENROLLMENTS, MOCK_COURSES, isOfflineError } from './mockData';
+import { MOCK_ENROLLMENTS, MOCK_INSTRUCTOR_ENROLLMENTS, MOCK_COURSES, isOfflineError } from './mockData';
 
 export const enrollInCourseApi = async (courseId) => {
   try {
@@ -46,5 +46,15 @@ export const checkEnrollmentApi = async (courseId) => {
       return { success: true, isEnrolled: !!found, enrollment: found || null };
     }
     return { success: false, isEnrolled: false };
+  }
+};
+
+export const getInstructorEnrollmentsApi = async () => {
+  try {
+    const { data } = await api.get('/enrollments/my-students');
+    return { success: true, enrollments: data.enrollments };
+  } catch (err) {
+    if (isOfflineError(err)) return { success: true, enrollments: MOCK_INSTRUCTOR_ENROLLMENTS };
+    return { success: false, enrollments: [], message: err.response?.data?.message || 'Failed' };
   }
 };
