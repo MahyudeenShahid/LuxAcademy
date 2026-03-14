@@ -139,4 +139,78 @@ const updateUserRole = async (req, res) => {
   }
 };
 
-module.exports = { getAllUsers, getUserById, deleteUser, getAnalytics, updateUserRole };
+// @desc   Get all instructors with stats (public)
+// @route  GET /api/users/instructors
+const getInstructors = async (req, res) => {
+  try {
+    const instructors = await User.find({ role: 'instructor' })
+      .select('name email avatar bio createdAt')
+      .sort({ createdAt: -1 });
+
+    const result = await Promise.all(
+      instructors.map(async (inst) => {
+        const courses = await Course.find({ instructor: inst._id, isPublished: true })
+          .select('title thumbnail category price level');
+        const courseIds = courses.map((c) => c._id);
+        const totalStudents = courseIds.length
+          ? await Enrollment.countDocuments({ course: { $in: courseIds } })
+          : 0;
+        return {
+          _id: inst._id,
+          name: inst.name,
+          avatar: inst.avatar,
+          bio: inst.bio,
+          createdAt: inst.createdAt,
+          courseCount: courses.length,
+          totalStudents,
+          featuredCourse: courses[0] || null,
+        };
+      })
+    );
+
+    res.json({ success: true, instructors: result });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// @desc   Get instructor profile + published courses (public)
+// @route  GET /api/users/instructors/:id
+const getInstructorProfile = async (req, res) => {
+  try {
+    const instructor = await User.findOne({ _id: req.params.id, role: 'instructor' })
+      .select('name email avatar bio createdAt');
+
+    if (!instructor) {
+      return res.status(404).json({ success: false, message: 'Instructor not found' });
+    }
+
+    const courses = await Course.find({ instructor: req.params.id, isPublished: true })
+      .populate('instructor', 'name')
+      .sort({ createdAt: -1 });
+
+    const courseIds = courses.map((c) => c._id);
+    const totalStudents = courseIds.length
+      ? await Enrollment.countDocuments({ course: { $in: courseIds } })
+      : 0;
+
+    res.json({
+      success: true,
+      instructor: {
+        _id: instructor._id,
+        name: instructor.name,
+        email: instructor.email,
+        avatar: instructor.avatar,
+        bio: instructor.bio,
+        createdAt: instructor.createdAt,
+        courseCount: courses.length,
+        totalStudents,
+      },
+      courses,
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+module.exports = { getAllUsers, getUserById, deleteUser, getAnalytics, updateUserRole, getInstructors, getInstructorProfile };

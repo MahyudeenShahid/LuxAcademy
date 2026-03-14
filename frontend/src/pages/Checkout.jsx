@@ -129,15 +129,15 @@ export default function Checkout() {
 
   return (
     <div className="bg-[#080410] min-h-screen text-white font-sans relative pt-24 pb-16">
-      <div className="absolute top-[5%] left-[10%] w-[400px] h-[400px] bg-violet-600/10 rounded-full blur-[150px] pointer-events-none" />
-      <div className="absolute bottom-[5%] right-[10%] w-[300px] h-[300px] bg-fuchsia-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-[5%] left-[10%] w-100 h-100 bg-violet-600/10 rounded-full blur-[150px] pointer-events-none" />
+      <div className="absolute bottom-[5%] right-[10%] w-75 h-75 bg-fuchsia-600/10 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-5xl mx-auto px-4 relative z-10">
         {/* Breadcrumb */}
         <div className="flex items-center gap-2 text-xs text-slate-500 font-semibold uppercase tracking-wider mb-8">
           <Link to="/courses" className="hover:text-violet-400 transition-colors">Courses</Link>
           <ChevronRight className="w-3 h-3" />
-          <Link to={`/courses/${courseId}`} className="hover:text-violet-400 transition-colors truncate max-w-[200px]">{course.title}</Link>
+          <Link to={`/courses/${courseId}`} className="hover:text-violet-400 transition-colors truncate max-w-50">{course.title}</Link>
           <ChevronRight className="w-3 h-3" />
           <span className="text-violet-300">Checkout</span>
         </div>
@@ -245,7 +245,7 @@ export default function Checkout() {
                   alt={course.title}
                   className="w-full h-full object-cover opacity-70"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#120B24] to-transparent" />
+                <div className="absolute inset-0 bg-linear-to-t from-[#120B24] to-transparent" />
               </div>
               <div className="p-6">
                 <h3 className="font-bold text-white text-lg mb-1 leading-snug">{course.title}</h3>

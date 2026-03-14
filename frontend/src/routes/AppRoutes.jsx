@@ -11,6 +11,8 @@ import Contact from "../pages/Contact";
 import Pricing from "../pages/Pricing";
 import LessonViewer from "../pages/LessonViewer";
 import Checkout from "../pages/Checkout";
+import InstructorsPage from "../pages/InstructorsPage";
+import InstructorProfile from "../pages/InstructorProfile";
 
 export default function AppRoutes() {
   return (

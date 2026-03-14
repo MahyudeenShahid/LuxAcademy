@@ -151,3 +151,72 @@ export const isOfflineError = (err) => !err.response;
 
 // Generate a fake JWT-like token for mock sessions
 export const mockToken = (userId) => `mock.${userId}.token`;
+
+/* ── Mock instructor list (fallback for /api/users/instructors) ── */
+export const MOCK_INSTRUCTORS = [
+  {
+    _id: 'u2',
+    name: 'Sarah Jenkins',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150',
+    bio: 'UI/UX Designer and design systems expert with experience at leading tech companies. Passionate about creating beautiful, user-centred products.',
+    createdAt: '2024-08-15',
+    courseCount: 3,
+    totalStudents: 4820,
+    featuredCourse: {
+      _id: 'c1', title: 'User Experience Design Fundamentals',
+      thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400',
+    },
+  },
+  {
+    _id: 'u5',
+    name: 'Emma Wilson',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=150',
+    bio: 'Full-stack developer and bootcamp instructor. Helped over 15,000 students land their first developer job through project-based learning.',
+    createdAt: '2024-07-20',
+    courseCount: 2,
+    totalStudents: 3510,
+    featuredCourse: {
+      _id: 'c2', title: 'Frontend Web Development Bootcamp',
+      thumbnail: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=400',
+    },
+  },
+  {
+    _id: 'ui3',
+    name: 'Marcus Lee',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150',
+    bio: 'Data scientist and ML engineer. Author of two bestselling Python courses with hands-on real-world projects and live mentoring sessions.',
+    createdAt: '2024-06-01',
+    courseCount: 2,
+    totalStudents: 9200,
+    featuredCourse: {
+      _id: 'c5', title: 'Python for Data Science & Machine Learning',
+      thumbnail: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400',
+    },
+  },
+];
+
+/* ── Mock instructor profile (fallback for /api/users/instructors/:id) ── */
+export const MOCK_INSTRUCTOR_PROFILE = {
+  instructor: {
+    _id: 'u2',
+    name: 'Sarah Jenkins',
+    email: 'instructor@lms.com',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=150',
+    bio: 'UI/UX Designer and design systems expert with experience at leading tech companies. Passionate about creating beautiful, user-centred products and sharing that knowledge with aspiring designers worldwide.',
+    createdAt: '2024-08-15',
+    courseCount: 3,
+    totalStudents: 4820,
+  },
+  courses: [
+    {
+      _id: 'c1', title: 'User Experience Design Fundamentals', category: 'UI/UX Design',
+      price: 19, level: 'beginner', duration: '4 Weeks',
+      thumbnail: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800',
+    },
+    {
+      _id: 'c3', title: 'Introduction to Graphic Design', category: 'Graphic Design',
+      price: 25, level: 'beginner', duration: '6 Weeks',
+      thumbnail: 'https://images.unsplash.com/photo-1626785774573-4b799315345d?w=800',
+    },
+  ],
+};

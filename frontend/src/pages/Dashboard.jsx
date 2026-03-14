@@ -10,12 +10,21 @@ import { motion, AnimatePresence } from "framer-motion";
 import StudentDashboard from "../components/dashboard/StudentDashboard";
 import InstructorDashboard from "../components/dashboard/InstructorDashboard";
 import AdminDashboard from "../components/dashboard/AdminDashboard";
+import DashboardTour from "../components/DashboardTour";
 
 export default function Dashboard() {
   const { user } = useAuth();
   const role = user?.role || "student";
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState(() => searchParams.get("tab") || "overview");
+
+  // First-login tour — keyed per user so each account gets the tour once
+  const tourKey = `lms_tour_${user?._id || role}_done`;
+  const [showTour, setShowTour] = useState(false);
+  useEffect(() => {
+    if (localStorage.getItem(tourKey) !== "true") setShowTour(true);
+  }, [tourKey]);
+  const completeTour = () => { localStorage.setItem(tourKey, "true"); setShowTour(false); };
 
   // Prevent page-level scroll while dashboard is visible (footer below causes double scroll)
   useEffect(() => {
@@ -57,6 +66,12 @@ export default function Dashboard() {
   return (
     /* Fix double scroll: h-screen + overflow-hidden, single inner scroll on main */
     <div className="bg-[#080410] h-screen pt-16 flex flex-col md:flex-row text-white font-sans selection:bg-violet-600/30 overflow-hidden relative">
+      {/* First-login guided tour */}
+      <AnimatePresence>
+        {showTour && (
+          <DashboardTour role={role} setActiveTab={setActiveTab} onComplete={completeTour} />
+        )}
+      </AnimatePresence>
       {/* Background orbs */}
       <div className="absolute top-[20%] left-[20%] w-[500px] h-[500px] bg-violet-600/10 rounded-full blur-[150px] pointer-events-none z-0" />
       <div className="absolute bottom-[10%] right-[10%] w-[400px] h-[400px] bg-indigo-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
@@ -94,19 +109,22 @@ export default function Dashboard() {
         <nav className="space-y-2 flex-grow">
           <h4 className="text-xs font-bold text-slate-500 uppercase tracking-widest mb-4 ml-2">Menu</h4>
           {menus[role].map((item) => (
-            <button
+            <motion.button
               key={item.id}
               onClick={() => setActiveTab(item.id)}
-              className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl font-semibold text-sm transition-all group ${
+              whileTap={{ scale: 0.97 }}
+              whileHover={{ x: activeTab === item.id ? 0 : 3 }}
+              transition={{ type: "spring", stiffness: 400, damping: 20 }}
+              className={`w-full flex items-center space-x-3 px-4 py-3.5 rounded-xl font-semibold text-sm transition-colors group ${
                 activeTab === item.id
-                  ? "bg-violet-600 text-white shadow-[0_0_20px_rgba(124,58,237,0.2)]"
+                  ? "bg-violet-600 text-white shadow-[0_0_20px_rgba(124,58,237,0.25)]"
                   : "text-slate-400 hover:bg-[#120B24] hover:text-white"
               }`}
             >
-              <item.icon className={`h-5 w-5 ${activeTab === item.id ? "text-white" : "text-slate-500 group-hover:text-violet-400"}`} />
+              <item.icon className={`h-5 w-5 transition-colors ${activeTab === item.id ? "text-white" : "text-slate-500 group-hover:text-violet-400"}`} />
               <span>{item.label}</span>
               {activeTab === item.id && <ChevronRight className="w-4 h-4 ml-auto opacity-50" />}
-            </button>
+            </motion.button>
           ))}
         </nav>
       </aside>

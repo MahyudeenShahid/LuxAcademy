@@ -1,5 +1,5 @@
 import api from './api';
-import { MOCK_USERS, MOCK_ANALYTICS, MOCK_ENROLLMENTS, isOfflineError } from './mockData';
+import { MOCK_USERS, MOCK_ANALYTICS, MOCK_ENROLLMENTS, MOCK_INSTRUCTORS, MOCK_INSTRUCTOR_PROFILE, isOfflineError } from './mockData';
 
 export const getAllUsersApi = async () => {
   try {
@@ -48,5 +48,25 @@ export const updateUserRoleApi = async (id, role) => {
   } catch (err) {
     if (isOfflineError(err)) return { success: true, user: { _id: id, role } };
     return { success: false, message: err.response?.data?.message || 'Failed to update role' };
+  }
+};
+
+export const getInstructorsApi = async () => {
+  try {
+    const { data } = await api.get('/users/instructors');
+    return { success: true, instructors: data.instructors };
+  } catch (err) {
+    if (isOfflineError(err)) return { success: true, instructors: MOCK_INSTRUCTORS };
+    return { success: false, instructors: [], message: err.response?.data?.message || 'Failed' };
+  }
+};
+
+export const getInstructorProfileApi = async (id) => {
+  try {
+    const { data } = await api.get(`/users/instructors/${id}`);
+    return { success: true, instructor: data.instructor, courses: data.courses };
+  } catch (err) {
+    if (isOfflineError(err)) return { success: true, ...MOCK_INSTRUCTOR_PROFILE };
+    return { success: false, instructor: null, courses: [], message: err.response?.data?.message || 'Failed' };
   }
 };

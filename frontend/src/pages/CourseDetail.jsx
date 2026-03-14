@@ -101,8 +101,8 @@ export default function CourseDetail() {
 
   return (
     <div className="bg-[#080410] min-h-screen text-white font-sans selection:bg-violet-600/30 overflow-hidden relative pb-24">
-      <div className="absolute top-[10%] left-[-10%] w-[600px] h-[600px] bg-violet-600/10 rounded-full blur-[150px] pointer-events-none z-0" />
-      <div className="absolute top-[40%] right-[-5%] w-[400px] h-[400px] bg-fuchsia-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-[10%] left-[-10%] w-150 h-150 bg-violet-600/10 rounded-full blur-[150px] pointer-events-none z-0" />
+      <div className="absolute top-[40%] right-[-5%] w-100 h-100 bg-fuchsia-600/10 rounded-full blur-[120px] pointer-events-none z-0" />
 
       {/* Hero Section */}
       <div className="pt-32 lg:pt-40 pb-32 relative z-10 border-b border-white/5 bg-[#0A051A]/50 backdrop-blur-3xl">
@@ -112,7 +112,7 @@ export default function CourseDetail() {
             <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
             <span className="text-slate-500">{course.category}</span>
             <ChevronRight className="h-3 w-3 sm:h-4 sm:w-4" />
-            <span className="text-violet-300 truncate max-w-[200px]">{course.title}</span>
+            <span className="text-violet-300 truncate max-w-50">{course.title}</span>
           </div>
 
           <div className="grid lg:grid-cols-3 gap-16">
@@ -129,7 +129,7 @@ export default function CourseDetail() {
 
               <div className="flex flex-wrap items-center gap-x-6 gap-y-4 text-sm font-medium text-slate-300">
                 <div className="flex items-center space-x-2 bg-white/5 px-3 py-1.5 rounded-xl">
-                  <div className="flex text-amber-400 flex-shrink-0">
+                  <div className="flex text-amber-400 shrink-0">
                     {[...Array(5)].map((_, i) => <Star key={i} className="h-4 w-4 fill-amber-400" />)}
                   </div>
                   <span className="text-white font-bold">4.9</span>
@@ -326,7 +326,7 @@ export default function CourseDetail() {
                     alt="Course Preview"
                     className="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:scale-105 group-hover:opacity-80 transition-all duration-700"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/80 to-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="w-16 h-16 bg-violet-600/90 backdrop-blur-md border border-white/20 rounded-full flex items-center justify-center group-hover:scale-110 group-hover:bg-violet-500 transition-all shadow-[0_0_30px_rgba(124,58,237,0.5)]">
                       <PlayCircle className="h-8 w-8 text-white ml-1" />
