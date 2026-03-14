@@ -26,6 +26,9 @@ export default function AppRoutes() {
 
       <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
 
+      <Route path="/instructors" element={<InstructorsPage />} />
+      <Route path="/instructors/:id" element={<InstructorProfile />} />
+
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />

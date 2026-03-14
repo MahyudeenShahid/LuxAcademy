@@ -58,10 +58,11 @@ export default function Navbar() {
   const handleLogout = () => { logout(); setDropOpen(false); navigate("/"); };
 
   const navLinks = [
-    { label: "Home",    path: "/" },
-    { label: "Courses", path: "/courses" },
-    { label: "Pricing", path: "/pricing" },
-    { label: "Contact", path: "/contact" },
+    { label: "Home",        path: "/" },
+    { label: "Courses",     path: "/courses" },
+    { label: "Instructors", path: "/instructors" },
+    { label: "Pricing",     path: "/pricing" },
+    { label: "Contact",     path: "/contact" },
   ];
 
   const roleLinks = user ? (ROLE_LINKS[user.role] || ROLE_LINKS.student) : [];
