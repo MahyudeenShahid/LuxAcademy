@@ -54,6 +54,10 @@ The backend runs with or without MongoDB — it automatically falls back to an i
 ![Certificate](docs/img/certificate.png)
 > Downloadable course completion certificate.
 
+### 404 Not Found Page
+![404 Page](docs/img/404.png)
+> A friendly 404 error page that guides users back to the homepage when a page is not found.
+
 ---
 
 ## Technologies Used
@@ -105,8 +109,8 @@ The backend runs with or without MongoDB — it automatically falls back to an i
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/your-username/project_ecom.git
-cd project_ecom
+git clone https://github.com/MahyudeenShahid/LuxAcademy.git
+cd LuxAcademy
 ```
 
 ### 2. Backend setup
@@ -181,10 +185,13 @@ cd ../frontend && npm run dev   # Terminal 2
 | Email | Password | Role |
 |---|---|---|
 | admin@lms.com | password123 | Admin |
-| instructor@lms.com | password123 | Instructor |
-| sarah@lms.com | password123 | Instructor |
-| student@lms.com | password123 | Student |
-| bob@lms.com | password123 | Student |
+| instructor@lms.com | password123 | Instructor (John Smith) |
+| sarah@lms.com | password123 | Instructor (Sarah Johnson) |
+| marcus@lms.com | password123 | Instructor (Marcus Lee) |
+| student@lms.com | password123 | Student (Alice) |
+| bob@lms.com | password123 | Student (Bob) |
+| emma@lms.com | password123 | Student (Emma Wilson) |
+| david@lms.com | password123 | Student (David Chen) |
 
 ---
 

@@ -171,11 +171,11 @@ The seed script creates:
 
 | Collection | Records |
 |---|---|
-| users | 6 (1 admin, 3 instructors, 2 students) |
-| courses | 6 (mix of categories and difficulty) |
-| lessons | 9 (across multiple courses) |
-| enrollments | 6 |
-| reviews | — (submit via UI after enrolling) |
+| users | 8 (1 admin, 3 instructors, 4 students) |
+| courses | 7 (mix of categories and difficulty) |
+| lessons | 18+ (across multiple courses) |
+| enrollments | 11 |
+| reviews | 9 |
 
 ### Seed Credentials
 
@@ -184,8 +184,11 @@ The seed script creates:
 | admin@lms.com | password123 | admin |
 | instructor@lms.com | password123 | instructor |
 | sarah@lms.com | password123 | instructor |
+| marcus@lms.com | password123 | instructor |
 | student@lms.com | password123 | student |
 | bob@lms.com | password123 | student |
+| emma@lms.com | password123 | student |
+| david@lms.com | password123 | student |
 
 ---
 
@@ -194,11 +197,11 @@ The seed script creates:
 When `USE_MOCK_DB=true`, the same 5 collections are held in memory:
 
 ```
-store.users       → 5 documents
-store.courses     → 6 documents
-store.lessons     → 8 documents
-store.enrollments → 4 documents
-store.reviews     → 6 documents
+store.users       → 8 documents
+store.courses     → 8 documents
+store.lessons     → 16 documents
+store.enrollments → 9 documents
+store.reviews     → 12 documents
 ```
 
 All data resets on server restart.

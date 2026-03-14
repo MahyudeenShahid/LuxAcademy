@@ -13,6 +13,7 @@ import LessonViewer from "../pages/LessonViewer";
 import Checkout from "../pages/Checkout";
 import InstructorsPage from "../pages/InstructorsPage";
 import InstructorProfile from "../pages/InstructorProfile";
+import NotFound from "../pages/NotFound";
 
 export default function AppRoutes() {
   return (
@@ -33,6 +34,8 @@ export default function AppRoutes() {
       <Route path="/register" element={<Register />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/pricing" element={<Pricing />} />
+
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }

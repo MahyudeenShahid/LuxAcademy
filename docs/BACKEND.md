@@ -179,11 +179,11 @@ Model.find(filter).populate('instructor').sort({ createdAt: -1 }).select('name e
 
 | Collection | Count | Notes |
 |---|---|---|
-| users | 5 | 1 admin, 2 instructors, 2 students |
-| courses | 6 | Mix of published/draft |
-| lessons | 8 | Spread across courses |
-| enrollments | 4 | Two students enrolled |
-| reviews | 6 | Cross-course reviews |
+| users | 8 | 1 admin, 3 instructors, 4 students |
+| courses | 8 | Mix of published/draft, multiple categories |
+| lessons | 16 | Spread across courses |
+| enrollments | 9 | Four students enrolled across multiple courses |
+| reviews | 12 | Cross-course reviews with ratings 3–5 |
 
 ### Seed Credentials
 
@@ -192,8 +192,11 @@ Model.find(filter).populate('instructor').sort({ createdAt: -1 }).select('name e
 | admin@lms.com | password123 | admin |
 | instructor@lms.com | password123 | instructor |
 | sarah@lms.com | password123 | instructor |
+| marcus@lms.com | password123 | instructor |
 | student@lms.com | password123 | student |
 | bob@lms.com | password123 | student |
+| emma@lms.com | password123 | student |
+| david@lms.com | password123 | student |
 
 ---
 
@@ -233,5 +236,5 @@ node seed.js
 The seed script:
 1. Forces `USE_MOCK_DB=false` (overrides .env) so it always uses real Mongoose
 2. Clears all collections
-3. Creates 6 users, 6 courses, 9 lessons, 6 enrollments
+3. Creates 8 users, 7 courses, 18+ lessons, 11 enrollments, 9 reviews
 4. Prints login credentials table on success
